@@ -13,8 +13,8 @@
         @media (min-width: 1024px) { .masonry { column-count: 3; } }
         .break-inside { break-inside: avoid; }
         
-        /* Cursor blink animation for typing effect */
-        .typing-cursor::after {
+        /* Typing effect: Cursor blink animation */
+        .typing-effect::after {
             content: '|';
             animation: blink 1s infinite;
             margin-left: 4px;
@@ -52,21 +52,50 @@
     <main class="max-w-6xl w-full mx-auto px-6 mt-12 flex-grow">
         
         <header class="text-center max-w-3xl mx-auto mb-10">
-            <h1 class="text-4xl md:text-5xl font-black tracking-tight text-white mb-3 min-h-[1.2em] typing-cursor"
-                x-data="{ title: 'PROOF AND VOUCHES AVAILABLE', displayedTitle: '' }"
-                x-init="setTimeout(() => { 
-                    let i = 0; 
-                    let interval = setInterval(() => { 
-                        displayedTitle += title[i]; 
-                        i++; 
-                        if(i >= title.length) clearInterval(interval); 
-                    }, 60); 
+            <h1 class="text-4xl md:text-5xl font-black tracking-tight text-white mb-3 min-h-[1.2em] typing-effect"
+                x-data="{ phrases: ['PROOD AND VOUCHES AVAILABLE'], displayedText: '', phraseIndex: 0, charIndex: 0, isDeleting: false }"
+                x-init="setTimeout(() => {
+                    let interval = setInterval(() => {
+                        let currentPhrase = phrases[phraseIndex];
+                        
+                        if (!isDeleting) {
+                            displayedText = currentPhrase.substring(0, charIndex + 1);
+                            charIndex++;
+                            
+                            // If phrase is fully typed, start deleting after a delay
+                            if (charIndex === currentPhrase.length) {
+                                isDeleting = true;
+                                setTimeout(() => {}, 2000); // Pause before deleting
+                            }
+                        } else {
+                            // Only delete 'AVAILABLE' part
+                            displayedText = currentPhrase.substring(0, charIndex);
+                            charIndex--;
+                            
+                            // Stop deleting at 'Proof and vouches '
+                            if (charIndex === 'Proof and vouches '.length) {
+                                isDeleting = false;
+                                setTimeout(() => {}, 1000); // Pause before re-typing
+                            }
+                        }
+                        
+                    }, 80); 
                 }, 500)"
-                x-text="displayedTitle">
+                x-text="displayedText">
             </h1>
             
-            <p class="text-indigo-400 text-sm md:text-base font-semibold tracking-wide animate-pulse">
-                Your Trust, My Priority.
+            <p class="text-indigo-400 text-sm md:text-base font-semibold tracking-wide animate-pulse"
+               x-data="{ tagline: 'Your Trust, My Priority.', displayedTagline: '', charIndex: 0 }"
+               x-init="setTimeout(() => {
+                    let interval = setInterval(() => {
+                        displayedTagline = tagline.substring(0, charIndex + 1);
+                        charIndex++;
+                        if (charIndex === tagline.length) {
+                            clearInterval(interval);
+                        }
+                    }, 50); 
+               }, 200)"
+               x-text="displayedTagline">
             </p>
         </header>
 
@@ -233,7 +262,7 @@
 
                 filteredItems() {
                     if (!this.searchQuery) return this.items;
-                    return this.items.filter(() => true); 
+                    return this.items.filter(() => true); // Maintained for structure compatibility
                 },
 
                 sortedFilteredItems() {
