@@ -13,11 +13,11 @@
         @media (min-width: 1024px) { .masonry { column-count: 3; } }
         .break-inside { break-inside: avoid; }
         
-        /* Typing effect: Cursor blink animation */
+        /* Smooth glowing layout typing cursor */
         .typing-effect::after {
             content: '|';
             animation: blink 1s infinite;
-            margin-left: 4px;
+            margin-left: 2px;
             color: #6366f1;
         }
         @keyframes blink {
@@ -35,8 +35,12 @@
                 <span class="text-xl font-black tracking-tight text-white">Yelo<span class="text-indigo-500">Vouch</span></span>
             </div>
             <div class="flex items-center gap-6 text-sm font-medium">
-                <a href="#" class="text-slate-400 hover:text-white transition-colors">Discord</a>
-                <a href="#" class="text-slate-400 hover:text-white transition-colors">Facebook</a>
+                <a href="https://discordapp.com/users/662913713333993506" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">
+                    Discord
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=100023767581830" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">
+                    Facebook
+                </a>
                 <button @click="showPasswordField = !showPasswordField" x-show="!adminMode"
                         class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-xl transition-all shadow-lg shadow-indigo-600/20">
                     Open Admin
@@ -51,51 +55,45 @@
 
     <main class="max-w-6xl w-full mx-auto px-6 mt-12 flex-grow">
         
-        <header class="text-center max-w-3xl mx-auto mb-10">
-            <h1 class="text-4xl md:text-5xl font-black tracking-tight text-white mb-3 min-h-[1.2em] typing-effect"
-                x-data="{ phrases: ['PROOD AND VOUCHES AVAILABLE'], displayedText: '', phraseIndex: 0, charIndex: 0, isDeleting: false }"
-                x-init="setTimeout(() => {
-                    let interval = setInterval(() => {
-                        let currentPhrase = phrases[phraseIndex];
-                        
-                        if (!isDeleting) {
-                            displayedText = currentPhrase.substring(0, charIndex + 1);
-                            charIndex++;
-                            
-                            // If phrase is fully typed, start deleting after a delay
-                            if (charIndex === currentPhrase.length) {
-                                isDeleting = true;
-                                setTimeout(() => {}, 2000); // Pause before deleting
+        <header class="text-center max-w-4xl mx-auto mb-10 overflow-hidden">
+            <h1 class="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black tracking-tight text-white mb-4 min-h-[1.2em] typing-effect whitespace-nowrap uppercase"
+                x-data="{ fullText: 'PROOF AND VOUCHES AVAILABLE', displayedText: '', charIndex: 0, isDeleting: false, isWaiting: false }"
+                x-init="
+                    setTimeout(() => {
+                        setInterval(() => {
+                            if (isWaiting) return;
+
+                            if (!isDeleting) {
+                                displayedText = fullText.substring(0, charIndex + 1);
+                                charIndex++;
+                                
+                                if (charIndex === fullText.length) {
+                                    isWaiting = true;
+                                    setTimeout(() => {
+                                        isDeleting = true;
+                                        isWaiting = false;
+                                    }, 7000);
+                                }
+                            } else {
+                                displayedText = fullText.substring(0, charIndex - 1);
+                                charIndex--;
+                                
+                                if (charIndex === 0) {
+                                    isWaiting = true;
+                                    setTimeout(() => {
+                                        isDeleting = false;
+                                        isWaiting = false;
+                                    }, 1000);
+                                }
                             }
-                        } else {
-                            // Only delete 'AVAILABLE' part
-                            displayedText = currentPhrase.substring(0, charIndex);
-                            charIndex--;
-                            
-                            // Stop deleting at 'Proof and vouches '
-                            if (charIndex === 'Proof and vouches '.length) {
-                                isDeleting = false;
-                                setTimeout(() => {}, 1000); // Pause before re-typing
-                            }
-                        }
-                        
-                    }, 80); 
-                }, 500)"
+                        }, 100);
+                    }, 500);
+                "
                 x-text="displayedText">
             </h1>
             
-            <p class="text-indigo-400 text-sm md:text-base font-semibold tracking-wide animate-pulse"
-               x-data="{ tagline: 'Your Trust, My Priority.', displayedTagline: '', charIndex: 0 }"
-               x-init="setTimeout(() => {
-                    let interval = setInterval(() => {
-                        displayedTagline = tagline.substring(0, charIndex + 1);
-                        charIndex++;
-                        if (charIndex === tagline.length) {
-                            clearInterval(interval);
-                        }
-                    }, 50); 
-               }, 200)"
-               x-text="displayedTagline">
+            <p class="text-indigo-400 text-xs sm:text-sm md:text-base font-semibold tracking-wide animate-pulse">
+                Your Trust, My Priority.
             </p>
         </header>
 
@@ -106,7 +104,7 @@
                 </svg>
             </div>
             <div>
-                <div class="text-3xl font-black text-white tracking-tight" x-text="filteredItems().length">0</div>
+                <div class="text-3xl font-black text-white tracking-tight" x-text="items.length">0</div>
                 <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-0.5">Verified Vouches</div>
             </div>
         </section>
@@ -162,14 +160,7 @@
             </div>
         </section>
 
-        <section class="max-w-6xl mx-auto mb-8 flex flex-col sm:flex-row items-center justify-end gap-3">
-            <div class="relative w-full sm:w-72">
-                <input type="text" x-model="searchQuery" placeholder="Search vouches..." 
-                       class="w-full bg-[#0e121f] border border-slate-900 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 transition-colors">
-                <div class="absolute left-3.5 top-2.5 text-slate-500">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </div>
-            </div>
+        <section class="max-w-6xl mx-auto mb-8 flex items-center justify-end">
             <div class="w-full sm:w-auto">
                 <select x-model="sortOrder" class="w-full sm:w-auto bg-[#0e121f] border border-slate-900 rounded-xl px-4 py-2 text-sm text-slate-300 font-medium focus:outline-none cursor-pointer">
                     <option value="latest">Latest First</option>
@@ -179,7 +170,7 @@
         </section>
 
         <section class="masonry">
-            <template x-for="(item, index) in sortedFilteredItems()" :key="item.id">
+            <template x-for="(item, index) in sortedItems()" :key="item.id">
                 <div class="break-inside bg-[#0e121f] border border-slate-900/60 rounded-2xl overflow-hidden mb-6 group relative transition-all duration-300 hover:border-slate-800 hover:shadow-xl shadow-black/20 flex flex-col">
                     
                     <template x-if="adminMode">
@@ -233,7 +224,6 @@
                 activeImage: null,
                 selectedFile: null,
                 uploading: false,
-                searchQuery: '',
                 sortOrder: 'latest',
                 items: [],
                 fileSha: '',
@@ -260,13 +250,8 @@
                     }
                 },
 
-                filteredItems() {
-                    if (!this.searchQuery) return this.items;
-                    return this.items.filter(() => true); // Maintained for structure compatibility
-                },
-
-                sortedFilteredItems() {
-                    let result = [...this.filteredItems()];
+                sortedItems() {
+                    let result = [...this.items];
                     if (this.sortOrder === 'latest') {
                         return result.sort((a, b) => b.id - a.id);
                     } else {
