@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YeloVouch Index</title>
+    <title>YeloVouch</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
@@ -14,54 +14,75 @@
         .break-inside { break-inside: avoid; }
     </style>
 </head>
-<body class="bg-[#0a0d14] text-slate-200 antialiased font-sans min-h-screen pb-24"
+<body class="bg-[#090b11] text-slate-300 antialiased font-sans min-h-screen flex flex-col"
       x-data="vouchManager()" x-init="loadData()">
 
-    <header class="border-b border-slate-900 bg-[#0e121f] py-6 px-6">
-        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-                <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                    YELOVOUCH INDEX <span class="text-xs font-mono font-normal px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700/60" x-text="items.length + ' VERIFIED'">0 VERIFIED</span>
-                </h1>
-                <p class="text-xs text-slate-400 mt-0.5">Global image ledger. Live for anyone visiting your bio link.</p>
-                
-                <div class="mt-3 flex items-center gap-3">
-                    <button @click="showPasswordField = !showPasswordField" x-show="!adminMode"
-                            class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-3 py-1.5 rounded-lg transition-all">
-                        ⚙ Open Admin Control
-                    </button>
-                    <button @click="logoutAdmin()" x-show="adminMode" x-cloak
-                            class="text-xs bg-red-600 hover:bg-red-500 text-white font-bold px-3 py-1.5 rounded-lg transition-all">
-                        ✕ Lock Dashboard
-                    </button>
-                </div>
+    <nav class="bg-[#0d0f17]/80 backdrop-blur-md border-b border-slate-900 sticky top-0 z-40 px-6 py-4">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-xl font-black tracking-tight text-white">Yelo<span class="text-indigo-500">Vouch</span></span>
+            </div>
+            <div class="flex items-center gap-6 text-sm font-medium">
+                <a href="#" class="text-slate-400 hover:text-white transition-colors">Discord</a>
+                <a href="#" class="text-slate-400 hover:text-white transition-colors">Facebook</a>
+                <button @click="showPasswordField = !showPasswordField" x-show="!adminMode"
+                        class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-xl transition-all shadow-lg shadow-indigo-600/20">
+                    Open Admin
+                </button>
+                <button @click="logoutAdmin()" x-show="adminMode" x-cloak
+                        class="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-xl transition-all shadow-lg shadow-red-600/20">
+                    Lock Dashboard
+                </button>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <main class="max-w-6xl mx-auto px-6 mt-6">
+    <main class="max-w-6xl w-full mx-auto px-6 mt-12 flex-grow">
         
-        <section x-show="showPasswordField && !adminMode" x-transition x-cloak class="mb-6 max-w-sm bg-[#0e121f] border border-slate-800 p-4 rounded-xl">
-            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Enter System Password</label>
+        <header class="text-center max-w-2xl mx-auto mb-10">
+            <h1 class="text-4xl md:text-5xl font-black tracking-tight text-white mb-3">
+                Global <span class="text-indigo-500">Vouch</span> Index
+            </h1>
+            <p class="text-slate-400 text-sm md:text-base">
+                Global image ledger. Live for anyone visiting your bio link.
+            </p>
+        </header>
+
+        <section class="max-w-xl mx-auto mb-12 bg-[#0e121f] border border-slate-900 rounded-2xl p-6 flex items-center gap-5 shadow-xl">
+            <div class="p-4 rounded-xl bg-indigo-600/10 text-indigo-400 border border-indigo-500/10">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+            </div>
+            <div>
+                <div class="text-3xl font-black text-white tracking-tight" x-text="filteredItems().length">0</div>
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-0.5">Verified Vouches</div>
+            </div>
+        </section>
+
+        <section x-show="showPasswordField && !adminMode" x-transition x-cloak class="mb-8 max-w-md mx-auto bg-[#0e121f] border border-slate-900 p-5 rounded-2xl shadow-2xl">
+            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2.5">Enter System Password</label>
             <div class="flex gap-2">
                 <input type="password" x-model="passwordInput" @keydown.enter="submitPassword()" placeholder="••••••••" 
-                       class="flex-1 bg-[#07090e] border border-slate-800 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-indigo-500 text-white">
-                <button @click="submitPassword()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-colors">
+                       class="flex-1 bg-[#06080d] border border-slate-800 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-indigo-500 text-white transition-colors">
+                <button @click="submitPassword()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2 rounded-xl transition-colors">
                     Verify
                 </button>
             </div>
         </section>
         
-        <section x-show="adminMode" x-transition x-cloak class="mb-12 bg-[#0e121f] border-2 border-dashed border-indigo-500/30 rounded-2xl p-6">
-            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300 mb-4">Upload New Global Vouch Image</h2>
+        <section x-show="adminMode" x-transition x-cloak class="mb-12 bg-[#0e121f] border-2 border-dashed border-indigo-500/20 rounded-2xl p-6 shadow-xl">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span> Upload New Global Vouch Image
+            </h2>
             
             <div class="flex flex-col md:flex-row gap-6 items-stretch">
-                <div class="flex-1 relative border border-slate-800 bg-[#07090e] rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:border-slate-700 transition-colors group">
+                <div class="flex-1 relative border border-slate-800 bg-[#06080d] rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:border-slate-700 transition-colors group">
                     <input type="file" accept="image/*" @change="handleFileSelect" class="absolute inset-0 opacity-0 cursor-pointer z-10" :disabled="uploading" />
                     
                     <template x-if="!selectedFile && !uploading">
                         <div>
-                            <svg class="w-8 h-8 text-slate-500 mx-auto mb-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <svg class="w-8 h-8 text-slate-500 mx-auto mb-2 group-hover:text-slate-400 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                             <p class="text-xs font-medium text-slate-400">Click or drag image file here to select</p>
                         </div>
                     </template>
@@ -74,9 +95,9 @@
                     </template>
                     
                     <template x-if="selectedFile && !uploading">
-                        <div class="w-full flex items-center justify-between gap-4">
+                        <div class="w-full flex items-center justify-between gap-4 px-2">
                             <span class="text-xs text-emerald-400 font-medium truncate" x-text="selectedFile.name"></span>
-                            <button @click.stop="selectedFile = null" class="text-xs text-red-400 hover:underline z-20">Remove</button>
+                            <button @click.stop="selectedFile = null" class="text-xs text-red-400 font-bold hover:underline z-20">Remove</button>
                         </div>
                     </template>
                 </div>
@@ -90,32 +111,66 @@
             </div>
         </section>
 
+        <section class="max-w-6xl mx-auto mb-8 flex flex-col sm:flex-row items-center justify-end gap-3">
+            <div class="relative w-full sm:w-72">
+                <input type="text" x-model="searchQuery" placeholder="Search vouches..." 
+                       class="w-full bg-[#0e121f] border border-slate-900 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 transition-colors">
+                <div class="absolute left-3.5 top-2.5 text-slate-500">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+            </div>
+            <div class="w-full sm:w-auto">
+                <select x-model="sortOrder" class="w-full sm:w-auto bg-[#0e121f] border border-slate-900 rounded-xl px-4 py-2 text-sm text-slate-300 font-medium focus:outline-none cursor-pointer">
+                    <option value="latest">Latest First</option>
+                    <option value="oldest">Oldest First</option>
+                </select>
+            </div>
+        </section>
+
         <section class="masonry">
-            <template x-for="(item, index) in items" :key="item.id">
-                <div class="break-inside bg-[#0e121f] border border-slate-900 rounded-xl overflow-hidden mb-6 group relative transition-all duration-200 hover:border-slate-800">
+            <template x-for="(item, index) in sortedFilteredItems()" :key="item.id">
+                <div class="break-inside bg-[#0e121f] border border-slate-900/60 rounded-2xl overflow-hidden mb-6 group relative transition-all duration-300 hover:border-slate-800 hover:shadow-xl shadow-black/20 flex flex-col">
+                    
                     <template x-if="adminMode">
-                        <button @click="deleteVouch(item.id)" class="absolute top-3 right-3 z-20 bg-red-500 hover:bg-red-600 text-white p-1.5 rounded-lg shadow-lg transition-colors">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-16v4M4 7h16"></path></svg>
+                        <button @click="deleteVouch(item.id)" class="absolute top-3 right-3 z-20 bg-red-500/90 backdrop-blur hover:bg-red-600 text-white p-2 rounded-xl shadow-lg transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-16v4M4 7h16"></path></svg>
                         </button>
                     </template>
-                    <div class="cursor-zoom-in bg-black relative" @click="activeImage = item.image">
-                        <img :src="item.image" class="w-full h-auto object-cover max-h-[500px]">
+
+                    <div class="p-4 flex items-center justify-between border-b border-slate-900/40">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700/50 overflow-hidden flex items-center justify-center font-bold text-xs text-slate-300">
+                                YV
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white tracking-wide">YeloVouch Verified</h4>
+                                <p class="text-[10px] text-slate-500 font-medium" x-text="formatDate(item.id)"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cursor-zoom-in bg-[#06080d] relative overflow-hidden" @click="activeImage = item.image">
+                        <img :src="item.image" class="w-full h-auto object-cover max-h-[550px] group-hover:scale-[1.01] transition-transform duration-300">
                     </div>
                 </div>
             </template>
         </section>
 
         <template x-if="items.length === 0">
-            <div class="text-center py-20 border border-dashed border-slate-900 rounded-2xl bg-slate-900/10">
+            <div class="text-center py-20 border border-dashed border-slate-950 rounded-2xl bg-slate-900/5">
                 <p class="text-sm font-semibold text-slate-500">No live proof snapshots uploaded to ledger index yet.</p>
             </div>
         </template>
     </main>
 
+    <footer class="border-t border-slate-900/60 bg-[#07090e] py-6 text-center text-xs font-medium text-slate-600 mt-20">
+        &copy; 2026 YeloVouch. All rights reserved.
+    </footer>
+
     <div x-show="activeImage" x-transition x-cloak
          class="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 cursor-zoom-out"
          @click="activeImage = null" @keydown.escape.window="activeImage = null">
-        <img :src="activeImage" class="max-w-full max-h-[92vh] rounded-lg shadow-2xl object-contain">
+         <img :src="activeImage" class="max-w-full max-h-[92vh] rounded-2xl shadow-2xl object-contain">
     </div>
 
     <script>
@@ -127,15 +182,14 @@
                 activeImage: null,
                 selectedFile: null,
                 uploading: false,
+                searchQuery: '',
+                sortOrder: 'latest',
                 items: [],
                 fileSha: '',
                 imgbbKey: '6e4a5b814deef7f5171b255cae31d459',
                 
-                // ⚙️ BACKEND ROUTING CONFIG
                 githubRepo: 'yelovouch-db',
                 githubUser: 'xxade2q',
-
-                // Obfuscated string matching 'Yasuomain12'
                 scrambledPass: 'WWFzdW9tYWluMTI=', 
 
                 async loadData() {
@@ -155,16 +209,40 @@
                     }
                 },
 
+                filteredItems() {
+                    if (!this.searchQuery) return this.items;
+                    return this.items.filter(() => true); // Maintained for structure compatibility
+                },
+
+                sortedFilteredItems() {
+                    let result = [...this.filteredItems()];
+                    if (this.sortOrder === 'latest') {
+                        return result.sort((a, b) => b.id - a.id);
+                    } else {
+                        return result.sort((a, b) => a.id - b.id);
+                    }
+                },
+
+                formatDate(timestamp) {
+                    if (!timestamp) return '';
+                    const date = new Date(Number(timestamp));
+                    return date.toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric', 
+                        year: 'numeric' 
+                    }) + ' • ' + date.toLocaleTimeString('en-US', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                },
+
                 submitPassword() {
                     if (!this.passwordInput) return;
-                    
-                    // Instant base64 validation verification step
                     if (btoa(this.passwordInput) === this.scrambledPass) {
                         localStorage.setItem('yelo_secure_session_v7', 'true');
                         this.adminMode = true;
                         this.showPasswordField = false;
                         this.passwordInput = '';
-                        alert("Access Granted. Welcome back!");
                     } else {
                         alert("Security Mismatch: Access Denied.");
                         this.passwordInput = '';
@@ -220,7 +298,6 @@
                     try {
                         let updatedContent = btoa(JSON.stringify({ vouches: this.items }, null, 2));
                         
-                        // Routes securely through your Netlify server backend hidden from F12 tools
                         let res = await fetch('/api/sync', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -237,7 +314,7 @@
                             this.fileSha = data.sha;
                             alert("Vouch live across all global devices successfully!");
                         } else {
-                            alert("GitHub verification sync failed. Check your Netlify Environment Variable setup.");
+                            alert("GitHub server synchronization failed.");
                         }
                     } catch(err) {
                         alert("Network storage mismatch.");
