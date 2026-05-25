@@ -12,6 +12,18 @@
         @media (min-width: 640px) { .masonry { column-count: 2; } }
         @media (min-width: 1024px) { .masonry { column-count: 3; } }
         .break-inside { break-inside: avoid; }
+        
+        /* Cursor blink animation for typing effect */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+            margin-left: 4px;
+            color: #6366f1;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
     </style>
 </head>
 <body class="bg-[#090b11] text-slate-300 antialiased font-sans min-h-screen flex flex-col"
@@ -39,12 +51,22 @@
 
     <main class="max-w-6xl w-full mx-auto px-6 mt-12 flex-grow">
         
-        <header class="text-center max-w-2xl mx-auto mb-10">
-            <h1 class="text-4xl md:text-5xl font-black tracking-tight text-white mb-3">
-                Global <span class="text-indigo-500">Vouch</span> Index
+        <header class="text-center max-w-3xl mx-auto mb-10">
+            <h1 class="text-4xl md:text-5xl font-black tracking-tight text-white mb-3 min-h-[1.2em] typing-cursor"
+                x-data="{ title: 'Proof and vouches available', displayedTitle: '' }"
+                x-init="setTimeout(() => { 
+                    let i = 0; 
+                    let interval = setInterval(() => { 
+                        displayedTitle += title[i]; 
+                        i++; 
+                        if(i >= title.length) clearInterval(interval); 
+                    }, 60); 
+                }, 500)"
+                x-text="displayedTitle">
             </h1>
+            
             <p class="text-indigo-400 text-sm md:text-base font-semibold tracking-wide animate-pulse">
-                Verified transaction proof.
+                Your Trust, My Priority..
             </p>
         </header>
 
@@ -73,7 +95,7 @@
         
         <section x-show="adminMode" x-transition x-cloak class="mb-12 bg-[#0e121f] border-2 border-dashed border-indigo-500/20 rounded-2xl p-6 shadow-xl">
             <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span> Upload New Global Vouch Image
+                <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span> Upload New Proof Snapshot
             </h2>
             
             <div class="flex flex-col md:flex-row gap-6 items-stretch">
@@ -211,7 +233,7 @@
 
                 filteredItems() {
                     if (!this.searchQuery) return this.items;
-                    return this.items.filter(() => true); // Maintained for structure compatibility
+                    return this.items.filter(() => true); 
                 },
 
                 sortedFilteredItems() {
