@@ -1,41 +1,51 @@
 const fetch = require('node-fetch');
 
-exports.handler = async (event, context) => {
-    // Only allow POST requests (image uploads)
-    if (event.httpMethod !== "POST") {
-        return { statusCode: 405, body: "Method Not Allowed" };
+module.exports = async (req, res) => {
+    // Enable CORS handling so your frontend can communicate with the API smoothly
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
     try {
-        const payload = JSON.parse(event.body);
-        const token = process.env.GITHUB_TOKEN; // Safely pulled from Netlify's secret settings vault
-        
-        // Securely talk to GitHub from the server side where F12 can't see
-        const res = await fetch(`https://api.github.com/repos/${payload.user}/${payload.repo}/contents/db.json`, {
+        const { user, repo, content, sha } = req.body;
+        const token = process.env.GITHUB_TOKEN;
+
+        if (!token) {
+            return res.status(500).json({ error: 'System token configuration is missing on server.' });
+        }
+
+        // Connect directly to GitHub API to save changes securely
+        const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/db.json`, {
             method: 'PUT',
             headers: {
                 'Authorization': `token ${token}`,
                 'Content-Type': 'application/json',
-                'User-Agent': 'Netlify-Gateway'
+                'User-Agent': 'Vercel-Server-Gateway'
             },
             body: JSON.stringify({
-                message: "Update vouch database ledger",
-                content: payload.content,
-                sha: payload.sha
+                message: 'Update vouch database ledger via secure console',
+                content: content,
+                sha: sha || undefined
             })
         });
 
-        if (!res.ok) {
-            const errData = await res.text();
-            return { statusCode: res.status, body: errData };
+        const data = await response.json();
+
+        if (response.ok) {
+            return res.status(200).json({ sha: data.content.sha });
+        } else {
+            return res.status(response.status).json({ error: data.message || 'GitHub communication failure' });
         }
 
-        const data = await res.json();
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ sha: data.content.sha })
-        };
     } catch (err) {
-        return { statusCode: 500, body: err.toString() };
+        return res.status(500).json({ error: err.message });
     }
 };
