@@ -38,22 +38,17 @@
 <body class="bg-slate-50 dark:bg-[#090b11] text-slate-700 dark:text-slate-300 antialiased font-sans min-h-screen flex flex-col transition-colors duration-300"
       x-data="vouchManager()" x-init="initApp()">
 
-    <video id="bg-vid" loop playsinline class="video-bg">
+    <video id="bg-vid" autoplay loop playsinline class="video-bg">
         <source src="https://github.com/xxade2q/yelovouch-db/raw/main/ssstik.io_1779889339822.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
 
     <script>
-        setTimeout(() => {
-            const vid = document.getElementById('bg-vid');
-            if (vid) {
-                vid.play().catch(e => console.warn("Browser blocked audio autoplay. Click anywhere to allow playback."));
-            }
-        }, 1000);
-
-        // Fallback: If browser blocked it, play on the first click anywhere on the page
         document.body.addEventListener('click', () => {
-            document.getElementById('bg-vid').play();
+            const vid = document.getElementById('bg-vid');
+            if (vid.paused) {
+                vid.play();
+            }
         }, { once: true });
     </script>
 
