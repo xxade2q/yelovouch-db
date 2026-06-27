@@ -1,5 +1,13 @@
+
 {
+  "name": "yelovouch-api",
+  "version": "1.0.0",
+  "description": "GitHub sync API for YeloVouch",
+  "main": "api/sync.js",
   "dependencies": {
     "node-fetch": "^2.7.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }
