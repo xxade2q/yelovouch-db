@@ -18,7 +18,6 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         [x-cloak] { display: none !important; }
-        /* Prevent double scroll / extra page */
         html, body {
             overflow-x: hidden;
             height: 100%;
@@ -33,7 +32,6 @@
             flex-direction: column;
             min-height: 100vh;
         }
-        /* Theme transition overlay */
         .theme-transition {
             animation: themeFade 0.4s ease;
         }
@@ -49,7 +47,6 @@
         .break-inside { break-inside: avoid; }
 
         /* ===== THEME VARIABLES ===== */
-        /* Cosmic (default) */
         :root {
             --primary: #7c3aed;
             --primary-glow: #a78bfa;
@@ -77,7 +74,6 @@
             --overlay-color: rgba(0, 0, 0, 0.6);
         }
 
-        /* Arctic */
         .theme-arctic {
             --primary: #38bdf8;
             --primary-glow: #7dd3fc;
@@ -105,7 +101,6 @@
             --overlay-color: rgba(0, 20, 40, 0.7);
         }
 
-        /* Ember */
         .theme-ember {
             --primary: #f97316;
             --primary-glow: #fb923c;
@@ -133,7 +128,7 @@
             --overlay-color: rgba(40, 10, 5, 0.7);
         }
 
-        /* ===== VIDEO BACKGROUND ===== */
+        /* Video background */
         .video-bg {
             position: fixed;
             top: 0;
@@ -165,7 +160,7 @@
             overflow-x: hidden;
         }
 
-        /* ===== COMPONENT STYLES ===== */
+        /* Glass components */
         .glass {
             background: var(--glass-bg);
             backdrop-filter: blur(16px) saturate(180%);
@@ -342,19 +337,47 @@
             background: var(--bg-deep);
             color: var(--text-primary);
         }
+
+        .meteor {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: var(--meteor-color);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+            box-shadow: 0 0 6px var(--meteor-color);
+            animation: meteorFall 4s linear infinite;
+        }
+        .meteor::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 1.5px;
+            background: linear-gradient(to left, var(--meteor-trail), transparent);
+            transform: rotate(25deg);
+            transform-origin: right center;
+        }
+        @keyframes meteorFall {
+            0% { transform: translate(0, 0) scale(0); opacity: 0; }
+            10% { opacity: 1; transform: translate(0, 0) scale(1); }
+            80% { opacity: 1; }
+            100% { transform: translate(-600px, 600px) scale(0); opacity: 0; }
+        }
     </style>
 </head>
 <body class="bg-deep text-white font-cosmic antialiased"
       x-data="vouchManager()" x-init="initApp()"
       :class="'theme-' + currentTheme + (themeTransition ? ' theme-transition' : '')">
 
-    <!-- VIDEO BACKGROUND (exactly like your original) -->
+    <!-- Video Background -->
     <video id="bg-vid" autoplay loop playsinline poster="https://github.com/xxade2q/yelovouch-db/raw/main/we.png" class="video-bg">
         <source src="https://github.com/xxade2q/yelovouch-db/raw/main/ssstik.io_1779889339822.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
 
-    <!-- Click-to-play fix (original) -->
     <script>
         document.addEventListener('click', () => {
             const vid = document.getElementById('bg-vid');
@@ -362,14 +385,7 @@
         }, { once: true });
     </script>
 
-    <!-- Meteors (optional, over video) -->
-    <div class="meteor" style="top: 10%; left: 80%; animation-delay: 0s;"></div>
-    <div class="meteor" style="top: 25%; left: 60%; animation-delay: 2.5s;"></div>
-    <div class="meteor" style="top: 50%; left: 90%; animation-delay: 4.2s;"></div>
-    <div class="meteor" style="top: 15%; left: 30%; animation-delay: 6.8s;"></div>
-    <div class="meteor" style="top: 70%; left: 50%; animation-delay: 8.5s;"></div>
-
-    <!-- Content Layer -->
+    <!-- Content -->
     <div class="content-layer">
         <!-- Navigation -->
         <nav class="glass sticky top-0 z-40 px-6 py-3 border-b border-current/20 backdrop-blur-xl">
@@ -383,7 +399,6 @@
                     </span>
                 </div>
                 <div class="flex items-center gap-3 sm:gap-4 text-sm font-medium flex-wrap">
-                    <!-- Theme Selector -->
                     <select x-model="currentTheme" @change="saveTheme()" class="theme-selector">
                         <option value="cosmic">🌌 Cosmic</option>
                         <option value="arctic">🧊 Arctic</option>
@@ -426,17 +441,12 @@
                 </div>
             </header>
 
-            <!-- Stats -->
-            <section class="max-w-2xl mx-auto mb-12 grid grid-cols-2 gap-4 fade-in" style="animation-delay: 0.1s">
+            <!-- Stats: Only Total Vouches -->
+            <section class="max-w-xs mx-auto mb-12 fade-in" style="animation-delay: 0.1s">
                 <div class="glass rounded-2xl p-5 text-center card-cosmic relative overflow-hidden group">
                     <div class="absolute top-0 left-0 w-full h-0.5 bg-[var(--primary)]/30 group-hover:h-full transition-all duration-700 opacity-20"></div>
                     <div class="stat-number" x-text="items.length"></div>
                     <div class="text-xs font-medium text-white/60 uppercase tracking-wider mt-1">Total Vouches</div>
-                </div>
-                <div class="glass rounded-2xl p-5 text-center card-cosmic relative overflow-hidden group">
-                    <div class="absolute top-0 left-0 w-full h-0.5 bg-[var(--primary)]/30 group-hover:h-full transition-all duration-700 opacity-20"></div>
-                    <div class="stat-number" x-text="uniqueUsers"></div>
-                    <div class="text-xs font-medium text-white/60 uppercase tracking-wider mt-1">Unique Visitors</div>
                 </div>
             </section>
 
@@ -581,7 +591,6 @@
                 fileSha: '',
                 lastUpdated: null,
                 viewCount: 0,
-                uniqueUsers: 1,
                 currentTheme: localStorage.getItem('yelo_theme') || 'cosmic',
                 themeTransition: false,
                 imgbbKey: '6e4a5b814deef7f5171b255cae31d459',
@@ -610,17 +619,12 @@
                 },
 
                 updateViewCount() {
+                    // Still track views internally but don't display
                     let views = parseInt(localStorage.getItem('yelo_views') || '0');
                     views++;
                     localStorage.setItem('yelo_views', views.toString());
                     this.viewCount = views;
-                    if (!localStorage.getItem('yelo_visitor')) {
-                        localStorage.setItem('yelo_visitor', Date.now().toString());
-                        let unique = parseInt(localStorage.getItem('yelo_unique') || '0');
-                        unique++;
-                        localStorage.setItem('yelo_unique', unique.toString());
-                    }
-                    this.uniqueUsers = parseInt(localStorage.getItem('yelo_unique') || '1');
+                    // We no longer track unique visitors for display
                 },
 
                 async loadData() {
