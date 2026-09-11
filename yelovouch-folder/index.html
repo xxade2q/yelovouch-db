@@ -1,889 +1,1844 @@
 <!DOCTYPE html>
+
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>YeloVouch · Theme Vault</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: { cosmic: ['"Orbitron"', '"Rajdhani"', 'sans-serif'] },
+
+```
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                fontFamily: {
+                    cosmic: ['"Orbitron"', '"Rajdhani"', 'sans-serif']
                 }
             }
         }
-    </script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <style>
-        [x-cloak] { display: none !important; }
-        html, body {
-            overflow-x: hidden;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            color: var(--text-primary);
-            font-family: 'Orbitron', 'Rajdhani', sans-serif;
-            transition: background-color 0.5s ease, color 0.5s ease;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        .theme-transition {
-            animation: themeFade 0.4s ease;
-        }
-        @keyframes themeFade {
-            0% { opacity: 0.6; }
-            50% { opacity: 0.9; }
-            100% { opacity: 1; }
+    };
+</script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<style>
+    [x-cloak] { display: none !important; }
+
+    html, body {
+        overflow-x: hidden;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        color: var(--text-primary);
+        font-family: 'Orbitron', 'Rajdhani', sans-serif;
+        transition: background-color 0.5s ease, color 0.5s ease;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .theme-transition {
+        animation: themeFade 0.4s ease;
+    }
+
+    @keyframes themeFade {
+        0% { opacity: 0.6; }
+        50% { opacity: 0.9; }
+        100% { opacity: 1; }
+    }
+
+    .masonry {
+        column-count: 1;
+        column-gap: 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+        .masonry { column-count: 2; }
+    }
+
+    @media (min-width: 1024px) {
+        .masonry { column-count: 3; }
+    }
+
+    .break-inside {
+        break-inside: avoid;
+    }
+
+    :root {
+        --primary: #7c3aed;
+        --primary-glow: #a78bfa;
+        --secondary: #fcd34d;
+        --bg-deep: #0b0b2a;
+        --glass-bg: rgba(15,15,50,0.5);
+        --glass-border: rgba(124,58,237,0.25);
+        --glass-hover-border: rgba(124,58,237,0.6);
+        --text-primary: #ffffff;
+        --text-muted: rgba(255,255,255,0.6);
+        --stat-color: #fcd34d;
+        --stat-shadow: rgba(252,211,77,0.3);
+        --btn-bg: linear-gradient(135deg, #7c3aed, #a78bfa);
+        --btn-shadow: rgba(124,58,237,0.3);
+        --btn-hover-shadow: rgba(124,58,237,0.6);
+        --glitch-color1: #7c3aed;
+        --glitch-color2: #fcd34d;
+        --glitch-color3: #a78bfa;
+        --meteor-color: #ffffff;
+        --meteor-trail: rgba(255,255,255,0.9);
+        --card-bg: rgba(15,15,50,0.5);
+        --card-border: rgba(124,58,237,0.12);
+        --card-hover-border: #7c3aed;
+        --card-glow: rgba(124,58,237,0.3);
+        --overlay-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .theme-arctic {
+        --primary: #38bdf8;
+        --primary-glow: #7dd3fc;
+        --secondary: #e0f2fe;
+        --bg-deep: #0a1628;
+        --glass-bg: rgba(10,30,50,0.5);
+        --glass-border: rgba(56,189,248,0.25);
+        --glass-hover-border: rgba(56,189,248,0.6);
+        --text-primary: #ffffff;
+        --text-muted: rgba(255,255,255,0.6);
+        --stat-color: #e0f2fe;
+        --stat-shadow: rgba(224,242,254,0.3);
+        --btn-bg: linear-gradient(135deg, #38bdf8, #7dd3fc);
+        --btn-shadow: rgba(56,189,248,0.3);
+        --btn-hover-shadow: rgba(56,189,248,0.6);
+        --glitch-color1: #38bdf8;
+        --glitch-color2: #e0f2fe;
+        --glitch-color3: #7dd3fc;
+        --meteor-color: #ffffff;
+        --meteor-trail: rgba(255,255,255,0.9);
+        --card-bg: rgba(10,30,50,0.5);
+        --card-border: rgba(56,189,248,0.12);
+        --card-hover-border: #38bdf8;
+        --card-glow: rgba(56,189,248,0.3);
+        --overlay-color: rgba(0, 20, 40, 0.7);
+    }
+
+    .theme-ember {
+        --primary: #f97316;
+        --primary-glow: #fb923c;
+        --secondary: #ef4444;
+        --bg-deep: #1a0a05;
+        --glass-bg: rgba(40,15,5,0.5);
+        --glass-border: rgba(249,115,22,0.25);
+        --glass-hover-border: rgba(249,115,22,0.6);
+        --text-primary: #ffffff;
+        --text-muted: rgba(255,255,255,0.6);
+        --stat-color: #fcd34d;
+        --stat-shadow: rgba(252,211,77,0.3);
+        --btn-bg: linear-gradient(135deg, #f97316, #fb923c);
+        --btn-shadow: rgba(249,115,22,0.3);
+        --btn-hover-shadow: rgba(249,115,22,0.6);
+        --glitch-color1: #f97316;
+        --glitch-color2: #ef4444;
+        --glitch-color3: #fb923c;
+        --meteor-color: #fcd34d;
+        --meteor-trail: rgba(252,211,77,0.9);
+        --card-bg: rgba(40,15,5,0.5);
+        --card-border: rgba(249,115,22,0.12);
+        --card-hover-border: #f97316;
+        --card-glow: rgba(249,115,22,0.3);
+        --overlay-color: rgba(40, 10, 5, 0.7);
+    }
+
+    .video-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -2;
+        pointer-events: none;
+    }
+
+    .bg-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--overlay-color);
+        z-index: -1;
+        pointer-events: none;
+        transition: background 0.5s ease;
+    }
+
+    .content-layer {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .glass {
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 0 40px rgba(0,0,0,0.2);
+        transition: border-color 0.4s, box-shadow 0.4s, transform 0.3s;
+    }
+
+    .glass:hover {
+        border-color: var(--glass-hover-border);
+        box-shadow: 0 0 60px var(--card-glow);
+    }
+
+    .glass-dark {
+        background: rgba(0,0,0,0.6);
+        backdrop-filter: blur(16px) saturate(200%);
+        -webkit-backdrop-filter: blur(16px) saturate(200%);
+        border: 1px solid var(--glass-border);
+    }
+
+    .card-cosmic {
+        border: 1px solid var(--card-border);
+        background: var(--card-bg);
+        transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1), box-shadow 0.5s, border-color 0.3s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card-cosmic::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at center, var(--card-glow) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.6s;
+        pointer-events: none;
+    }
+
+    .card-cosmic:hover::before {
+        opacity: 0.3;
+    }
+
+    .card-cosmic:hover {
+        transform: translateY(-10px) scale(1.01) rotate(0.5deg);
+        border-color: var(--card-hover-border);
+        box-shadow: 0 0 60px var(--card-glow), inset 0 0 60px var(--card-glow);
+    }
+
+    .glitch-galaxy {
+        text-shadow: 0 0 5px var(--glitch-color1), 0 0 15px var(--glitch-color1), 0 0 30px var(--glitch-color3);
+        animation: glitchAnime 3s infinite;
+    }
+
+    @keyframes glitchAnime {
+        0% { transform: translate(0); text-shadow: 0 0 5px var(--glitch-color1); }
+        15% { transform: translate(-2px, 1px); text-shadow: 0 0 15px var(--glitch-color1), 0 0 30px var(--glitch-color2); }
+        30% { transform: translate(2px, -1px); text-shadow: 0 0 5px var(--glitch-color1); }
+        45% { transform: translate(-1px, 2px); text-shadow: 0 0 20px var(--glitch-color2), 0 0 40px var(--glitch-color1); }
+        60% { transform: translate(1px, -2px); text-shadow: 0 0 5px var(--glitch-color1); }
+        80% { transform: translate(-1px, -1px); text-shadow: 0 0 25px var(--glitch-color3), 0 0 50px var(--glitch-color1); }
+        100% { transform: translate(0); text-shadow: 0 0 5px var(--glitch-color1); }
+    }
+
+    .typing-cursor::after {
+        content: '✦';
+        animation: blink 0.9s step-end infinite;
+        color: var(--primary);
+        margin-left: 2px;
+        font-size: 1.2em;
+    }
+
+    @keyframes blink {
+        0%,100% { opacity:1; }
+        50% { opacity:0; }
+    }
+
+    .btn-cosmic {
+        background: var(--btn-bg);
+        color: #fff;
+        font-weight: 700;
+        transition: all 0.25s;
+        box-shadow: 0 0 20px var(--btn-shadow);
+        letter-spacing: 0.1em;
+        border: none;
+    }
+
+    .btn-cosmic:hover:not(:disabled) {
+        transform: scale(1.05) translateY(-2px);
+        box-shadow: 0 0 50px var(--btn-hover-shadow);
+    }
+
+    .btn-cosmic:disabled {
+        background: #3a2a5a;
+        color: #6a5a7a;
+        box-shadow: none;
+        opacity: 0.5;
+    }
+
+    input, select, textarea {
+        background: rgba(0,0,0,0.4) !important;
+        border: 1px solid var(--glass-border) !important;
+        color: var(--text-primary) !important;
+        font-family: 'Orbitron', sans-serif;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        border-radius: 0.75rem;
+        padding: 0.5rem 1rem;
+    }
+
+    input:focus, select:focus, textarea:focus {
+        border-color: var(--primary) !important;
+        outline: none !important;
+        box-shadow: 0 0 30px var(--card-glow);
+    }
+
+    ::-webkit-scrollbar {
+        width: 6px;
+        background: var(--bg-deep);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 4px;
+    }
+
+    .stat-number {
+        font-size: 2.8rem;
+        font-weight: 900;
+        color: var(--stat-color);
+        text-shadow: 0 0 20px var(--stat-shadow);
+        display: inline-block;
+        animation: starPulse 3s infinite;
+    }
+
+    @keyframes starPulse {
+        0% { text-shadow: 0 0 10px var(--stat-shadow); }
+        50% { text-shadow: 0 0 40px var(--stat-shadow), 0 0 80px var(--card-glow); }
+        100% { text-shadow: 0 0 10px var(--stat-shadow); }
+    }
+
+    .live-dot {
+        width: 10px;
+        height: 10px;
+        background: var(--primary);
+        border-radius: 50%;
+        display: inline-block;
+        animation: livePulse 1.5s infinite;
+        box-shadow: 0 0 20px var(--primary);
+    }
+
+    @keyframes livePulse {
+        0% { opacity: 0.3; transform: scale(0.8); }
+        50% { opacity: 1; transform: scale(1.2); }
+        100% { opacity: 0.3; transform: scale(0.8); }
+    }
+
+    .fade-in {
+        animation: fadeIn 0.6s ease-out both;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px) scale(0.95); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .admin-glow {
+        animation: adminGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes adminGlow {
+        0% {
+            border-color: var(--glass-border);
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
 
-        .masonry { column-count: 1; column-gap: 1.5rem; }
-        @media (min-width: 640px) { .masonry { column-count: 2; } }
-        @media (min-width: 1024px) { .masonry { column-count: 3; } }
-        .break-inside { break-inside: avoid; }
-
-        /* ===== THEME VARIABLES ===== */
-        :root {
-            --primary: #7c3aed;
-            --primary-glow: #a78bfa;
-            --secondary: #fcd34d;
-            --bg-deep: #0b0b2a;
-            --glass-bg: rgba(15,15,50,0.5);
-            --glass-border: rgba(124,58,237,0.25);
-            --glass-hover-border: rgba(124,58,237,0.6);
-            --text-primary: #ffffff;
-            --text-muted: rgba(255,255,255,0.6);
-            --stat-color: #fcd34d;
-            --stat-shadow: rgba(252,211,77,0.3);
-            --btn-bg: linear-gradient(135deg, #7c3aed, #a78bfa);
-            --btn-shadow: rgba(124,58,237,0.3);
-            --btn-hover-shadow: rgba(124,58,237,0.6);
-            --glitch-color1: #7c3aed;
-            --glitch-color2: #fcd34d;
-            --glitch-color3: #a78bfa;
-            --meteor-color: #ffffff;
-            --meteor-trail: rgba(255,255,255,0.9);
-            --card-bg: rgba(15,15,50,0.5);
-            --card-border: rgba(124,58,237,0.12);
-            --card-hover-border: #7c3aed;
-            --card-glow: rgba(124,58,237,0.3);
-            --overlay-color: rgba(0, 0, 0, 0.6);
-        }
-
-        .theme-arctic {
-            --primary: #38bdf8;
-            --primary-glow: #7dd3fc;
-            --secondary: #e0f2fe;
-            --bg-deep: #0a1628;
-            --glass-bg: rgba(10,30,50,0.5);
-            --glass-border: rgba(56,189,248,0.25);
-            --glass-hover-border: rgba(56,189,248,0.6);
-            --text-primary: #ffffff;
-            --text-muted: rgba(255,255,255,0.6);
-            --stat-color: #e0f2fe;
-            --stat-shadow: rgba(224,242,254,0.3);
-            --btn-bg: linear-gradient(135deg, #38bdf8, #7dd3fc);
-            --btn-shadow: rgba(56,189,248,0.3);
-            --btn-hover-shadow: rgba(56,189,248,0.6);
-            --glitch-color1: #38bdf8;
-            --glitch-color2: #e0f2fe;
-            --glitch-color3: #7dd3fc;
-            --meteor-color: #ffffff;
-            --meteor-trail: rgba(255,255,255,0.9);
-            --card-bg: rgba(10,30,50,0.5);
-            --card-border: rgba(56,189,248,0.12);
-            --card-hover-border: #38bdf8;
-            --card-glow: rgba(56,189,248,0.3);
-            --overlay-color: rgba(0, 20, 40, 0.7);
-        }
-
-        .theme-ember {
-            --primary: #f97316;
-            --primary-glow: #fb923c;
-            --secondary: #ef4444;
-            --bg-deep: #1a0a05;
-            --glass-bg: rgba(40,15,5,0.5);
-            --glass-border: rgba(249,115,22,0.25);
-            --glass-hover-border: rgba(249,115,22,0.6);
-            --text-primary: #ffffff;
-            --text-muted: rgba(255,255,255,0.6);
-            --stat-color: #fcd34d;
-            --stat-shadow: rgba(252,211,77,0.3);
-            --btn-bg: linear-gradient(135deg, #f97316, #fb923c);
-            --btn-shadow: rgba(249,115,22,0.3);
-            --btn-hover-shadow: rgba(249,115,22,0.6);
-            --glitch-color1: #f97316;
-            --glitch-color2: #ef4444;
-            --glitch-color3: #fb923c;
-            --meteor-color: #fcd34d;
-            --meteor-trail: rgba(252,211,77,0.9);
-            --card-bg: rgba(40,15,5,0.5);
-            --card-border: rgba(249,115,22,0.12);
-            --card-hover-border: #f97316;
-            --card-glow: rgba(249,115,22,0.3);
-            --overlay-color: rgba(40, 10, 5, 0.7);
-        }
-
-        /* Video background */
-        .video-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -2;
-            pointer-events: none;
-        }
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--overlay-color);
-            z-index: -1;
-            pointer-events: none;
-            transition: background 0.5s ease;
-        }
-        .content-layer {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            width: 100%;
-            overflow-x: hidden;
-        }
-
-        /* Glass components */
-        .glass {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 0 40px rgba(0,0,0,0.2);
-            transition: border-color 0.4s, box-shadow 0.4s, transform 0.3s;
-        }
-        .glass:hover {
-            border-color: var(--glass-hover-border);
-            box-shadow: 0 0 60px var(--card-glow);
-        }
-        .glass-dark {
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(16px) saturate(200%);
-            -webkit-backdrop-filter: blur(16px) saturate(200%);
-            border: 1px solid var(--glass-border);
-        }
-
-        .card-cosmic {
-            border: 1px solid var(--card-border);
-            background: var(--card-bg);
-            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1), box-shadow 0.5s, border-color 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        .card-cosmic::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, var(--card-glow) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.6s;
-            pointer-events: none;
-        }
-        .card-cosmic:hover::before {
-            opacity: 0.3;
-        }
-        .card-cosmic:hover {
-            transform: translateY(-10px) scale(1.01) rotate(0.5deg);
-            border-color: var(--card-hover-border);
-            box-shadow: 0 0 60px var(--card-glow), inset 0 0 60px var(--card-glow);
-        }
-
-        .glitch-galaxy {
-            text-shadow: 0 0 5px var(--glitch-color1), 0 0 15px var(--glitch-color1), 0 0 30px var(--glitch-color3);
-            animation: glitchAnime 3s infinite;
-        }
-        @keyframes glitchAnime {
-            0% { transform: translate(0); text-shadow: 0 0 5px var(--glitch-color1); }
-            15% { transform: translate(-2px, 1px); text-shadow: 0 0 15px var(--glitch-color1), 0 0 30px var(--glitch-color2); }
-            30% { transform: translate(2px, -1px); text-shadow: 0 0 5px var(--glitch-color1); }
-            45% { transform: translate(-1px, 2px); text-shadow: 0 0 20px var(--glitch-color2), 0 0 40px var(--glitch-color1); }
-            60% { transform: translate(1px, -2px); text-shadow: 0 0 5px var(--glitch-color1); }
-            80% { transform: translate(-1px, -1px); text-shadow: 0 0 25px var(--glitch-color3), 0 0 50px var(--glitch-color1); }
-            100% { transform: translate(0); text-shadow: 0 0 5px var(--glitch-color1); }
-        }
-
-        .typing-cursor::after {
-            content: '✦';
-            animation: blink 0.9s step-end infinite;
-            color: var(--primary);
-            margin-left: 2px;
-            font-size: 1.2em;
-        }
-        @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
-
-        .btn-cosmic {
-            background: var(--btn-bg);
-            color: #fff;
-            font-weight: 700;
-            transition: all 0.25s;
-            box-shadow: 0 0 20px var(--btn-shadow);
-            letter-spacing: 0.1em;
-            border: none;
-        }
-        .btn-cosmic:hover:not(:disabled) {
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 0 50px var(--btn-hover-shadow);
-        }
-        .btn-cosmic:disabled {
-            background: #3a2a5a;
-            color: #6a5a7a;
-            box-shadow: none;
-            opacity: 0.5;
-        }
-
-        input, select, textarea {
-            background: rgba(0,0,0,0.4) !important;
-            border: 1px solid var(--glass-border) !important;
-            color: var(--text-primary) !important;
-            font-family: 'Orbitron', sans-serif;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            border-radius: 0.75rem;
-            padding: 0.5rem 1rem;
-        }
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--primary) !important;
-            outline: none !important;
-            box-shadow: 0 0 30px var(--card-glow);
-        }
-        ::-webkit-scrollbar { width: 6px; background: var(--bg-deep); }
-        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
-
-        .stat-number {
-            font-size: 2.8rem;
-            font-weight: 900;
-            color: var(--stat-color);
-            text-shadow: 0 0 20px var(--stat-shadow);
-            display: inline-block;
-            animation: starPulse 3s infinite;
-        }
-        @keyframes starPulse {
-            0% { text-shadow: 0 0 10px var(--stat-shadow); }
-            50% { text-shadow: 0 0 40px var(--stat-shadow), 0 0 80px var(--card-glow); }
-            100% { text-shadow: 0 0 10px var(--stat-shadow); }
-        }
-
-        .live-dot {
-            width: 10px;
-            height: 10px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: inline-block;
-            animation: livePulse 1.5s infinite;
-            box-shadow: 0 0 20px var(--primary);
-        }
-        @keyframes livePulse {
-            0% { opacity: 0.3; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
-            100% { opacity: 0.3; transform: scale(0.8); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.6s ease-out both;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .admin-glow {
-            animation: adminGlow 2s ease-in-out infinite alternate;
-        }
-        @keyframes adminGlow {
-            0% { border-color: var(--glass-border); box-shadow: 0 0 20px rgba(0,0,0,0.1); }
-            100% { border-color: var(--primary); box-shadow: 0 0 60px var(--card-glow); }
-        }
-
-        @media (max-width: 640px) {
-            .stat-number { font-size: 2rem; }
-        }
-
-        .theme-selector {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--glass-border);
-            color: var(--text-primary);
-            padding: 0.3rem 0.8rem;
-            border-radius: 0.75rem;
-            font-size: 0.8rem;
-            font-family: 'Orbitron', sans-serif;
-            cursor: pointer;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        .theme-selector:focus {
+        100% {
             border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 20px var(--card-glow);
-        }
-        .theme-selector option {
-            background: var(--bg-deep);
-            color: var(--text-primary);
-        }
-
-        .meteor {
-            position: fixed;
-            width: 2px;
-            height: 2px;
-            background: var(--meteor-color);
-            border-radius: 50%;
-            z-index: 0;
-            pointer-events: none;
-            box-shadow: 0 0 6px var(--meteor-color);
-            animation: meteorFall 4s linear infinite;
-        }
-        .meteor::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 150px;
-            height: 1.5px;
-            background: linear-gradient(to left, var(--meteor-trail), transparent);
-            transform: rotate(25deg);
-            transform-origin: right center;
-        }
-        @keyframes meteorFall {
-            0% { transform: translate(0, 0) scale(0); opacity: 0; }
-            10% { opacity: 1; transform: translate(0, 0) scale(1); }
-            80% { opacity: 1; }
-            100% { transform: translate(-600px, 600px) scale(0); opacity: 0; }
-        }
-
-        /* Discord avatar badge */
-        .discord-avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: 2px solid var(--primary);
-            box-shadow: 0 0 10px var(--primary-glow);
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            object-fit: cover;
-        }
-        .discord-avatar:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px var(--primary-glow);
-        }
-
-        /* Discord modal */
-        .discord-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .discord-modal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .discord-modal-content {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 2rem;
-            padding: 2.5rem;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
             box-shadow: 0 0 60px var(--card-glow);
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-            position: relative;
         }
-        .discord-modal.active .discord-modal-content {
-            transform: scale(1);
+    }
+
+    @media (max-width: 640px) {
+        .stat-number {
+            font-size: 2rem;
         }
-        .discord-modal-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 4px solid var(--primary);
-            box-shadow: 0 0 40px var(--primary-glow);
-            margin: 0 auto 1rem;
-            object-fit: cover;
+    }
+
+    .theme-selector {
+        background: rgba(0,0,0,0.3);
+        border: 1px solid var(--glass-border);
+        color: var(--text-primary);
+        padding: 0.3rem 0.8rem;
+        border-radius: 0.75rem;
+        font-size: 0.8rem;
+        font-family: 'Orbitron', sans-serif;
+        cursor: pointer;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .theme-selector:focus {
+        border-color: var(--primary);
+        outline: none;
+        box-shadow: 0 0 20px var(--card-glow);
+    }
+
+    .theme-selector option {
+        background: var(--bg-deep);
+        color: var(--text-primary);
+    }
+
+    .meteor {
+        position: fixed;
+        width: 2px;
+        height: 2px;
+        background: var(--meteor-color);
+        border-radius: 50%;
+        z-index: 0;
+        pointer-events: none;
+        box-shadow: 0 0 6px var(--meteor-color);
+        animation: meteorFall 4s linear infinite;
+    }
+
+    .meteor::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 150px;
+        height: 1.5px;
+        background: linear-gradient(to left, var(--meteor-trail), transparent);
+        transform: rotate(25deg);
+        transform-origin: right center;
+    }
+
+    @keyframes meteorFall {
+        0% {
+            transform: translate(0, 0) scale(0);
+            opacity: 0;
         }
-        .discord-modal-username {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
+
+        10% {
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
         }
-        .discord-modal-tag {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
+
+        80% {
+            opacity: 1;
         }
-        .discord-modal-btn {
-            background: var(--btn-bg);
-            color: #fff;
-            border: none;
-            padding: 0.6rem 2rem;
-            border-radius: 2rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 0 20px var(--btn-shadow);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem;
-            letter-spacing: 0.05em;
-            text-decoration: none;
-            display: inline-block;
+
+        100% {
+            transform: translate(-600px, 600px) scale(0);
+            opacity: 0;
         }
-        .discord-modal-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 40px var(--btn-hover-shadow);
-        }
-        .discord-modal-close {
-            position: absolute;
-            top: 0.8rem;
-            right: 1.2rem;
-            font-size: 1.8rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: color 0.2s;
-            background: none;
-            border: none;
-            padding: 0.2rem 0.5rem;
-            line-height: 1;
-            z-index: 10;
-        }
-        .discord-modal-close:hover {
-            color: var(--text-primary);
-        }
-    </style>
+    }
+
+    .discord-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 2px solid var(--primary);
+        box-shadow: 0 0 10px var(--primary-glow);
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        object-fit: cover;
+    }
+
+    .discord-avatar:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 20px var(--primary-glow);
+    }
+
+    .discord-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: rgba(0,0,0,0.7);
+        backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .discord-modal.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .discord-modal-content {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 2rem;
+        padding: 2.5rem;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 0 60px var(--card-glow);
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+        position: relative;
+    }
+
+    .discord-modal.active .discord-modal-content {
+        transform: scale(1);
+    }
+
+    .discord-modal-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 4px solid var(--primary);
+        box-shadow: 0 0 40px var(--primary-glow);
+        margin: 0 auto 1rem;
+        object-fit: cover;
+    }
+
+    .discord-modal-username {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .discord-modal-tag {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 1.5rem;
+    }
+
+    .discord-modal-btn {
+        background: var(--btn-bg);
+        color: #fff;
+        border: none;
+        padding: 0.6rem 2rem;
+        border-radius: 2rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 0 20px var(--btn-shadow);
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.8rem;
+        letter-spacing: 0.05em;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .discord-modal-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 40px var(--btn-hover-shadow);
+    }
+
+    .discord-modal-close {
+        position: absolute;
+        top: 0.8rem;
+        right: 1.2rem;
+        font-size: 1.8rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: color 0.2s;
+        background: none;
+        border: none;
+        padding: 0.2rem 0.5rem;
+        line-height: 1;
+        z-index: 10;
+    }
+
+    .discord-modal-close:hover {
+        color: var(--text-primary);
+    }
+</style>
+```
+
 </head>
-<body class="bg-deep text-white font-cosmic antialiased"
-      x-data="vouchManager()" x-init="initApp()"
-      :class="'theme-' + currentTheme + (themeTransition ? ' theme-transition' : '')">
 
-    <!-- Video Background -->
-    <video id="bg-vid" autoplay loop playsinline poster="https://github.com/xxade2q/yelovouch-db/raw/main/we.png" class="video-bg">
-        <source src="https://github.com/xxade2q/yelovouch-db/raw/main/ssstik.io_1779889339822.mp4" type="video/mp4">
-    </video>
-    <div class="bg-overlay"></div>
+<body
+    class="bg-deep text-white font-cosmic antialiased"
+    x-data="vouchManager()"
+    x-init="initApp()"
+    :class="'theme-' + currentTheme + (themeTransition ? ' theme-transition' : '')"
+>
 
-    <script>
-        document.addEventListener('click', () => {
-            const vid = document.getElementById('bg-vid');
-            if (vid && vid.paused) vid.play().catch(()=>{});
-        }, { once: true });
-    </script>
+```
+<!-- Video Background -->
+<video
+    id="bg-vid"
+    autoplay
+    loop
+    playsinline
+    poster="https://github.com/xxade2q/yelovouch-db/raw/main/we.png"
+    class="video-bg"
+>
+    <source
+        src="https://github.com/xxade2q/yelovouch-db/raw/main/ssstik.io_1779889339822.mp4"
+        type="video/mp4"
+    >
+</video>
 
-    <!-- Meteors -->
-    <div class="meteor" style="top: 10%; left: 80%; animation-delay: 0s;"></div>
-    <div class="meteor" style="top: 25%; left: 60%; animation-delay: 2.5s;"></div>
-    <div class="meteor" style="top: 50%; left: 90%; animation-delay: 4.2s;"></div>
-    <div class="meteor" style="top: 15%; left: 30%; animation-delay: 6.8s;"></div>
-    <div class="meteor" style="top: 70%; left: 50%; animation-delay: 8.5s;"></div>
+<div class="bg-overlay"></div>
 
-    <!-- Discord Modal -->
-    <div class="discord-modal" id="discordModal" @click.self="closeDiscordModal()">
-        <div class="discord-modal-content">
-            <!-- Close button (fixed) -->
-            <button type="button" class="discord-modal-close" @click="closeDiscordModal()">✕</button>
-            <img src="https://github.com/xxade2q/yelovouch-db/raw/main/4d837a195534b8a7d60caeb4cb479a77.jpg" alt="Discord Avatar" class="discord-modal-avatar">
-            <div class="discord-modal-username">Yelo</div>
-            <div class="discord-modal-tag">@yelo2601</div>
-            <a href="https://discordapp.com/users/662913713333993506" target="_blank" rel="noopener" class="discord-modal-btn">View Full Profile</a>
-        </div>
+<script>
+    document.addEventListener('click', () => {
+        const vid = document.getElementById('bg-vid');
+        if (vid && vid.paused) {
+            vid.play().catch(() => {});
+        }
+    }, { once: true });
+</script>
+
+<!-- Meteors -->
+<div class="meteor" style="top:10%;left:80%;animation-delay:0s;"></div>
+<div class="meteor" style="top:25%;left:60%;animation-delay:2.5s;"></div>
+<div class="meteor" style="top:50%;left:90%;animation-delay:4.2s;"></div>
+<div class="meteor" style="top:15%;left:30%;animation-delay:6.8s;"></div>
+<div class="meteor" style="top:70%;left:50%;animation-delay:8.5s;"></div>
+
+<!-- Discord Modal -->
+<div
+    class="discord-modal"
+    id="discordModal"
+    @click.self="closeDiscordModal()"
+>
+    <div class="discord-modal-content">
+
+        <button
+            type="button"
+            class="discord-modal-close"
+            @click="closeDiscordModal()"
+        >
+            ✕
+        </button>
+
+        <img
+            src="https://github.com/xxade2q/yelovouch-db/raw/main/4d837a195534b8a7d60caeb4cb479a77.jpg"
+            alt="Discord Avatar"
+            class="discord-modal-avatar"
+        >
+
+        <div class="discord-modal-username">Yelo</div>
+        <div class="discord-modal-tag">@yelo2601</div>
+
+        <a
+            href="https://discordapp.com/users/662913713333993506"
+            target="_blank"
+            rel="noopener"
+            class="discord-modal-btn"
+        >
+            View Full Profile
+        </a>
     </div>
+</div>
 
-    <!-- Content -->
-    <div class="content-layer">
-        <!-- Navigation -->
-        <nav class="glass sticky top-0 z-40 px-6 py-3 border-b border-current/20 backdrop-blur-xl">
-            <div class="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-2">
-                <div class="flex items-center gap-3">
-                    <span class="text-xl font-black tracking-widest text-white glitch-galaxy drop-shadow-[0_0_30px_currentColor]">Yelo<span class="text-[var(--primary)]">Vouch</span></span>
-                    <span class="text-[10px] font-bold text-[var(--primary)]/70 bg-[var(--primary)]/10 px-2 py-0.5 rounded-full border border-[var(--primary)]/20 animate-pulse" x-text="currentTheme.toUpperCase()"></span>
-                    <span class="hidden sm:flex items-center gap-1.5 text-xs text-[var(--primary)]/50">
-                        <span class="live-dot"></span>
-                        <span>VAULT</span>
-                    </span>
-                </div>
-                <div class="flex items-center gap-3 sm:gap-4 text-sm font-medium flex-wrap">
-                    <!-- Theme Selector -->
-                    <select x-model="currentTheme" @change="saveTheme()" class="theme-selector">
-                        <option value="cosmic">🌌 Cosmic</option>
-                        <option value="arctic">🧊 Arctic</option>
-                        <option value="ember">🔥 Ember</option>
-                    </select>
+<div class="content-layer">
 
-                    <!-- Discord Link with Avatar Badge -->
-                    <div class="flex items-center gap-2 cursor-pointer" @click="openDiscordModal()">
-                        <img src="https://github.com/xxade2q/yelovouch-db/raw/main/4d837a195534b8a7d60caeb4cb479a77.jpg" alt="Discord Avatar" class="discord-avatar">
-                        <span class="text-white/70 hover:text-[var(--primary)] transition-colors">Discord</span>
-                    </div>
+    <!-- Navigation -->
+    <nav class="glass sticky top-0 z-40 px-6 py-3 border-b border-current/20 backdrop-blur-xl">
+        <div class="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-2">
 
-                    <a href="https://www.facebook.com/profile.php?id=61590340906581" target="_blank" rel="noopener" class="text-white/70 hover:text-[var(--primary)] transition-colors flex items-center gap-1.5">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12z"/></svg>
-                        Facebook
-                    </a>
-                    <button @click="showPasswordField = !showPasswordField" x-show="!adminMode" class="text-white/70 hover:text-[var(--primary)] transition-colors p-1.5 focus:outline-none" title="Admin">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.43l-1.003.767a1.123 1.123 0 00-.417 1.03c.004.074.006.148.006.222 0 .074-.002.148-.006.222a1.123 1.123 0 00.417 1.03l1.003.767a1.125 1.125 0 01.26 1.43l-1.296 2.247a1.125 1.125 0 01-1.37.49l-1.216-.456a1.125 1.125 0 00-1.07.124c-.073.044-.146.087-.22.128-.332.183-.582.495-.644.869l-.213 1.28c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281a1.125 1.125 0 00-.646-.87c-.074-.04-.147-.083-.22-.127a1.125 1.125 0 00-1.074-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.43l1.003-.767a1.122 1.122 0 00.417-1.03a3.47 3.47 0 01-.006-.222c0-.074.002-.148.006-.222a1.122 1.122 0 00-.417-1.03l-1.003-.767a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.49l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.28z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    </button>
-                    <button @click="logoutAdmin()" x-show="adminMode" x-cloak class="text-[var(--primary)]/70 hover:text-red-400 transition-colors p-1.5 focus:outline-none" title="Lock">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
-                    </button>
-                </div>
-            </div>
-        </nav>
+            <div class="flex items-center gap-3">
+                <span class="text-xl font-black tracking-widest text-white glitch-galaxy drop-shadow-[0_0_30px_currentColor]">
+                    Yelo<span class="text-[var(--primary)]">Vouch</span>
+                </span>
 
-        <main class="max-w-6xl w-full mx-auto px-6 mt-8 flex-grow">
-            <!-- Header -->
-            <header class="text-center max-w-4xl mx-auto mb-12 px-4 fade-in">
-                <div class="relative inline-block">
-                    <h1 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black tracking-widest text-white glitch-galaxy drop-shadow-[0_0_40px_currentColor] mb-4 typing-cursor leading-[1.1]"
-                        x-data="{ fullText: 'PROOF AND VOUCHES AVAILABLE', displayed: '', idx: 0, deleting: false, waiting: false }"
-                        x-init="setTimeout(() => setInterval(() => { if(waiting) return; if(!deleting){ displayed = fullText.substring(0, idx+1); idx++; if(idx === fullText.length){ waiting = true; setTimeout(() => { deleting = true; waiting = false; }, 3000); } } else { displayed = fullText.substring(0, idx-1); idx--; if(idx === 0){ waiting = true; setTimeout(() => { deleting = false; waiting = false; }, 800); } } }, 120), 300)"
-                        x-text="displayed"></h1>
-                </div>
-                <p class="text-[var(--primary)]/70 text-sm md:text-base font-semibold tracking-[0.3em] animate-pulse">// Your Trust, My Priority //</p>
-                <div class="mt-4 text-xs text-white/40 flex items-center justify-center gap-2">
-                    <span class="inline-block w-1 h-1 rounded-full bg-[var(--primary)]/50 animate-pulse"></span>
-                    <span>system: online</span>
-                    <span class="inline-block w-1 h-1 rounded-full bg-[var(--primary)]/50 animate-pulse"></span>
-                    <span>vault: active</span>
-                </div>
-            </header>
+                <span
+                    class="text-[10px] font-bold text-[var(--primary)]/70 bg-[var(--primary)]/10 px-2 py-0.5 rounded-full border border-[var(--primary)]/20 animate-pulse"
+                    x-text="currentTheme.toUpperCase()"
+                ></span>
 
-            <!-- Stats: Only Total Vouches -->
-            <section class="max-w-xs mx-auto mb-12 fade-in" style="animation-delay: 0.1s">
-                <div class="glass rounded-2xl p-5 text-center card-cosmic relative overflow-hidden group">
-                    <div class="absolute top-0 left-0 w-full h-0.5 bg-[var(--primary)]/30 group-hover:h-full transition-all duration-700 opacity-20"></div>
-                    <div class="stat-number" x-text="items.length"></div>
-                    <div class="text-xs font-medium text-white/60 uppercase tracking-wider mt-1">Total Vouches</div>
-                </div>
-            </section>
-
-            <!-- Admin login -->
-            <section x-show="showPasswordField && !adminMode" x-transition x-cloak class="mb-8 max-w-md mx-auto glass rounded-2xl p-6 border-l-4 border-[var(--primary)] admin-glow">
-                <div class="flex items-center gap-2 mb-3">
-                    <span class="text-[var(--primary)]/50 text-xs">$</span>
-                    <span class="text-xs text-white/70">authentication required</span>
-                </div>
-                <label class="block text-xs font-bold text-[var(--primary)]/70 uppercase tracking-wider mb-2.5">ENTER SYSTEM PASSWORD</label>
-                <div class="flex gap-2">
-                    <input type="password" x-model="passwordInput" @keydown.enter="submitPassword()" placeholder="••••••••" class="flex-1 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/40 focus:border-[var(--primary)]">
-                    <button @click="submitPassword()" class="btn-cosmic px-5 py-2.5 rounded-xl text-xs">VERIFY</button>
-                </div>
-            </section>
-
-            <!-- Admin upload -->
-            <section x-show="adminMode" x-transition x-cloak class="mb-12 glass-dark rounded-2xl p-6 border-2 border-[var(--primary)]/40 admin-glow relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent animate-pulse"></div>
-                <h2 class="text-xs font-bold uppercase tracking-wider text-[var(--primary)] mb-4 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-[var(--primary)] animate-pulse"></span> UPLOAD NEW VOUCH
-                    <span class="ml-auto text-[10px] text-white/40">[admin mode]</span>
-                </h2>
-                <div class="flex flex-col md:flex-row gap-6 items-stretch">
-                    <div class="flex-1 relative border border-[var(--primary)]/30 bg-black/50 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:border-[var(--primary)]/70 transition-colors group">
-                        <input type="file" accept="image/*" @change="handleFileSelect" class="absolute inset-0 opacity-0 cursor-pointer z-10" :disabled="uploading" />
-                        <template x-if="!selectedFile && !uploading">
-                            <div>
-                                <svg class="w-12 h-12 text-[var(--primary)]/60 mx-auto mb-3 group-hover:text-[var(--primary)] transition-colors" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                <p class="text-xs font-medium text-white/60">Click or drag image</p>
-                                <p class="text-[10px] text-white/30 mt-1">PNG, JPG, GIF accepted</p>
-                            </div>
-                        </template>
-                        <template x-if="uploading">
-                            <div>
-                                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary)] mx-auto mb-2"></div>
-                                <p class="text-xs font-medium text-[var(--primary)]">Uploading to vault...</p>
-                            </div>
-                        </template>
-                        <template x-if="selectedFile && !uploading">
-                            <div class="w-full flex items-center justify-between gap-4 px-2">
-                                <span class="text-xs text-[var(--primary)] font-medium truncate" x-text="selectedFile.name"></span>
-                                <button @click.stop="selectedFile = null" class="text-xs text-red-400 font-bold hover:underline z-20">Remove</button>
-                            </div>
-                        </template>
-                    </div>
-                    <div class="flex-1 flex flex-col gap-2">
-                        <input type="text" x-model="newCaption" placeholder="Caption (optional)" class="w-full rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/40 focus:border-[var(--primary)]">
-                        <button @click="uploadAndSave" :disabled="uploading || !selectedFile" class="w-full btn-cosmic rounded-xl px-8 py-4 text-xs uppercase tracking-wider disabled:opacity-50">Publish Live</button>
-                        <p class="text-[10px] text-white/30 text-center">This will sync to global vault</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Filter, sort, search -->
-            <section class="max-w-6xl mx-auto mb-8 flex flex-wrap items-center justify-between gap-4 fade-in" style="animation-delay: 0.2s">
-                <div class="flex items-center gap-4 flex-wrap">
-                    <div class="flex items-center gap-1.5 text-white/40 text-xs">
-                        <span>$</span>
-                        <span>grep</span>
-                    </div>
-                    <input type="text" x-model="searchQuery" placeholder="Search vouches..." class="glass rounded-xl px-4 py-2 text-sm text-white placeholder-white/40 focus:border-[var(--primary)] w-full sm:w-56">
-                    <select x-model="sortOrder" class="glass rounded-xl px-4 py-2 text-sm text-white font-medium focus:outline-none cursor-pointer">
-                        <option value="latest">Latest First</option>
-                        <option value="oldest">Oldest First</option>
-                    </select>
-                </div>
-                <div class="text-xs text-white/50" x-text="`${filteredItems().length} vouches found`"></div>
-            </section>
-
-            <!-- Masonry Grid -->
-            <section class="masonry">
-                <template x-for="(item, index) in filteredItems()" :key="item.id">
-                    <div class="break-inside glass rounded-2xl overflow-hidden mb-6 group relative card-cosmic fade-in"
-                         :style="`animation-delay: ${index * 60}ms`">
-                        <template x-if="adminMode">
-                            <button @click="deleteVouch(item.id)" class="absolute top-3 right-3 z-20 bg-red-500/80 backdrop-blur hover:bg-red-600 text-white p-2 rounded-xl shadow-lg transition-colors">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-16v4M4 7h16"/></svg>
-                            </button>
-                        </template>
-                        <div class="cursor-zoom-in bg-black/60 relative overflow-hidden" @click="activeImage = item.image">
-                            <img :src="item.image" class="w-full h-auto object-cover max-h-[550px] group-hover:scale-[1.04] transition-transform duration-700" loading="lazy" alt="Vouch proof">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
-                            <div class="absolute inset-0 bg-[var(--primary)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        </div>
-                        <div class="p-4 border-t border-[var(--primary)]/10 flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-[var(--primary)]/20 border border-[var(--primary)]/30 flex items-center justify-center font-bold text-xs text-[var(--primary)]">YV</div>
-                                <div>
-                                    <h4 class="text-xs font-bold text-white">YeloVouch</h4>
-                                    <p class="text-[10px] text-white/50" x-text="formatDate(item.id)"></p>
-                                </div>
-                            </div>
-                            <span class="text-xs text-white/40 font-mono">#<span x-text="index+1"></span></span>
-                        </div>
-                        <div x-show="item.caption" class="px-4 pb-4 text-xs text-white/70 border-t border-[var(--primary)]/5 pt-2" x-text="item.caption"></div>
-                    </div>
-                </template>
-            </section>
-
-            <div x-show="items.length === 0" class="text-center py-16 text-white/50 fade-in">
-                <div class="text-6xl mb-4 text-[var(--primary)]/20">🌌</div>
-                <p class="text-sm font-medium">No vouches found in vault.</p>
-                <p class="text-xs text-white/30 mt-2">$ echo "Be the first to upload"</p>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="border-t border-[var(--primary)]/10 bg-black/40 backdrop-blur-sm py-6 text-center text-xs font-medium text-white/40 mt-12">
-            <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between px-6">
-                <span>&copy; 2026 YeloVouch · All rights reserved.</span>
-                <span class="flex items-center gap-2 mt-2 sm:mt-0">
-                    <span class="text-[var(--primary)]/60">root@yelovouch:~$</span>
-                    <span class="text-white/30">./vault --status</span>
-                    <span class="text-[var(--primary)] animate-pulse">✦</span>
+                <span class="hidden sm:flex items-center gap-1.5 text-xs text-[var(--primary)]/50">
+                    <span class="live-dot"></span>
+                    <span>VAULT</span>
                 </span>
             </div>
-        </footer>
-    </div>
 
-    <!-- Lightbox -->
-    <div x-show="activeImage" x-transition x-cloak class="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 cursor-zoom-out" @click="activeImage = null" @keydown.escape.window="activeImage = null">
-        <div class="relative">
-            <img :src="activeImage" class="max-w-full max-h-[92vh] rounded-2xl shadow-2xl object-contain border-2 border-[var(--primary)]/50 shadow-[0_0_80px_var(--card-glow)]">
-            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] text-white/40 bg-black/60 px-3 py-1 rounded-full">click to close</div>
+            <div class="flex items-center gap-3 sm:gap-4 text-sm font-medium flex-wrap">
+
+                <select
+                    x-model="currentTheme"
+                    @change="saveTheme()"
+                    class="theme-selector"
+                >
+                    <option value="cosmic">🌌 Cosmic</option>
+                    <option value="arctic">🧊 Arctic</option>
+                    <option value="ember">🔥 Ember</option>
+                </select>
+
+                <div
+                    class="flex items-center gap-2 cursor-pointer"
+                    @click="openDiscordModal()"
+                >
+                    <img
+                        src="https://github.com/xxade2q/yelovouch-db/raw/main/4d837a195534b8a7d60caeb4cb479a77.jpg"
+                        alt="Discord Avatar"
+                        class="discord-avatar"
+                    >
+
+                    <span class="text-white/70 hover:text-[var(--primary)] transition-colors">
+                        Discord
+                    </span>
+                </div>
+
+                <a
+                    href="https://www.facebook.com/profile.php?id=61590340906581"
+                    target="_blank"
+                    rel="noopener"
+                    class="text-white/70 hover:text-[var(--primary)] transition-colors flex items-center gap-1.5"
+                >
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12z"/>
+                    </svg>
+                    Facebook
+                </a>
+
+                <button
+                    @click="showPasswordField = !showPasswordField"
+                    x-show="!adminMode"
+                    class="text-white/70 hover:text-[var(--primary)] transition-colors p-1.5 focus:outline-none"
+                    title="Admin"
+                >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.43l-1.003.767a1.123 1.123 0 00-.417 1.03c.004.074.006.148.006.222 0 .074-.002.148-.006.222a1.123 1.123 0 00.417 1.03l1.003.767a1.125 1.125 0 01.26 1.43l-1.296 2.247a1.125 1.125 0 01-1.37.49l-1.216-.456a1.125 1.125 0 00-1.07.124c-.073.044-.146.087-.22.128-.332.183-.582.495-.644.869l-.213 1.28c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281a1.125 1.125 0 00-.646-.87c-.074-.04-.147-.083-.22-.127a1.125 1.125 0 00-1.074-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.43l1.003-.767a1.122 1.122 0 00.417-1.03a3.47 3.47 0 01-.006-.222c0-.074.002-.148.006-.222a1.122 1.122 0 00-.417-1.03l-1.003-.767a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.49l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.28z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </button>
+
+                <button
+                    @click="logoutAdmin()"
+                    x-show="adminMode"
+                    x-cloak
+                    class="text-[var(--primary)]/70 hover:text-red-400 transition-colors p-1.5 focus:outline-none"
+                    title="Lock"
+                >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+                    </svg>
+                </button>
+
+            </div>
         </div>
+    </nav>
+
+    <main class="max-w-6xl w-full mx-auto px-6 mt-8 flex-grow">
+
+        <!-- Header -->
+        <header class="text-center max-w-4xl mx-auto mb-12 px-4 fade-in">
+
+            <div class="relative inline-block">
+
+                <h1
+                    class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black tracking-widest text-white glitch-galaxy drop-shadow-[0_0_40px_currentColor] mb-4 typing-cursor leading-[1.1]"
+                    x-data="{ fullText: 'PROOF AND VOUCHES AVAILABLE', displayed: '', idx: 0, deleting: false, waiting: false }"
+                    x-init="
+                        setTimeout(() => setInterval(() => {
+                            if(waiting) return;
+
+                            if(!deleting) {
+                                displayed = fullText.substring(0, idx+1);
+                                idx++;
+
+                                if(idx === fullText.length) {
+                                    waiting = true;
+                                    setTimeout(() => {
+                                        deleting = true;
+                                        waiting = false;
+                                    }, 3000);
+                                }
+                            } else {
+                                displayed = fullText.substring(0, idx-1);
+                                idx--;
+
+                                if(idx === 0) {
+                                    waiting = true;
+                                    setTimeout(() => {
+                                        deleting = false;
+                                        waiting = false;
+                                    }, 800);
+                                }
+                            }
+                        }, 120), 300)
+                    "
+                    x-text="displayed"
+                ></h1>
+
+            </div>
+
+            <p class="text-[var(--primary)]/70 text-sm md:text-base font-semibold tracking-[0.3em] animate-pulse">
+                // Your Trust, My Priority //
+            </p>
+
+            <div class="mt-4 text-xs text-white/40 flex items-center justify-center gap-2">
+                <span class="inline-block w-1 h-1 rounded-full bg-[var(--primary)]/50 animate-pulse"></span>
+                <span>system: online</span>
+                <span class="inline-block w-1 h-1 rounded-full bg-[var(--primary)]/50 animate-pulse"></span>
+                <span>vault: active</span>
+            </div>
+
+        </header>
+
+        <!-- Stats -->
+        <section class="max-w-xs mx-auto mb-12 fade-in" style="animation-delay:0.1s">
+
+            <div class="glass rounded-2xl p-5 text-center card-cosmic relative overflow-hidden group">
+
+                <div class="absolute top-0 left-0 w-full h-0.5 bg-[var(--primary)]/30 group-hover:h-full transition-all duration-700 opacity-20"></div>
+
+                <div class="stat-number" x-text="items.length"></div>
+
+                <div class="text-xs font-medium text-white/60 uppercase tracking-wider mt-1">
+                    Total Vouches
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Admin Login -->
+        <section
+            x-show="showPasswordField && !adminMode"
+            x-transition
+            x-cloak
+            class="mb-8 max-w-md mx-auto glass rounded-2xl p-6 border-l-4 border-[var(--primary)] admin-glow"
+        >
+
+            <div class="flex items-center gap-2 mb-3">
+                <span class="text-[var(--primary)]/50 text-xs">$</span>
+                <span class="text-xs text-white/70">authentication required</span>
+            </div>
+
+            <label class="block text-xs font-bold text-[var(--primary)]/70 uppercase tracking-wider mb-2.5">
+                ENTER SYSTEM PASSWORD
+            </label>
+
+            <div class="flex gap-2">
+
+                <input
+                    type="password"
+                    x-model="passwordInput"
+                    @keydown.enter="submitPassword()"
+                    placeholder="••••••••"
+                    class="flex-1 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/40 focus:border-[var(--primary)]"
+                >
+
+                <button
+                    @click="submitPassword()"
+                    class="btn-cosmic px-5 py-2.5 rounded-xl text-xs"
+                >
+                    VERIFY
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- Admin Upload -->
+        <section
+            x-show="adminMode"
+            x-transition
+            x-cloak
+            class="mb-12 glass-dark rounded-2xl p-6 border-2 border-[var(--primary)]/40 admin-glow relative overflow-hidden"
+        >
+
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent animate-pulse"></div>
+
+            <h2 class="text-xs font-bold uppercase tracking-wider text-[var(--primary)] mb-4 flex items-center gap-2">
+
+                <span class="w-2 h-2 rounded-full bg-[var(--primary)] animate-pulse"></span>
+
+                UPLOAD NEW VOUCH
+
+                <span class="ml-auto text-[10px] text-white/40">
+                    [admin mode]
+                </span>
+
+            </h2>
+
+            <div class="flex flex-col md:flex-row gap-6 items-stretch">
+
+                <div class="flex-1 relative border border-[var(--primary)]/30 bg-black/50 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:border-[var(--primary)]/70 transition-colors group">
+
+                    <input
+                        type="file"
+                        accept="image/*"
+                        @change="handleFileSelect"
+                        class="absolute inset-0 opacity-0 cursor-pointer z-10"
+                        :disabled="uploading"
+                    />
+
+                    <template x-if="!selectedFile && !uploading">
+                        <div>
+
+                            <svg class="w-12 h-12 text-[var(--primary)]/60 mx-auto mb-3 group-hover:text-[var(--primary)] transition-colors" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+
+                            <p class="text-xs font-medium text-white/60">
+                                Click or drag image
+                            </p>
+
+                            <p class="text-[10px] text-white/30 mt-1">
+                                PNG, JPG, GIF accepted
+                            </p>
+
+                        </div>
+                    </template>
+
+                    <template x-if="uploading">
+                        <div>
+
+                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary)] mx-auto mb-2"></div>
+
+                            <p class="text-xs font-medium text-[var(--primary)]">
+                                Uploading to vault...
+                            </p>
+
+                        </div>
+                    </template>
+
+                    <template x-if="selectedFile && !uploading">
+                        <div class="w-full flex items-center justify-between gap-4 px-2">
+
+                            <span
+                                class="text-xs text-[var(--primary)] font-medium truncate"
+                                x-text="selectedFile.name"
+                            ></span>
+
+                            <button
+                                @click.stop="selectedFile = null"
+                                class="text-xs text-red-400 font-bold hover:underline z-20"
+                            >
+                                Remove
+                            </button>
+
+                        </div>
+                    </template>
+
+                </div>
+
+                <div class="flex-1 flex flex-col gap-2">
+
+                    <input
+                        type="text"
+                        x-model="newCaption"
+                        placeholder="Caption (optional)"
+                        class="w-full rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/40 focus:border-[var(--primary)]"
+                    >
+
+                    <button
+                        @click="uploadAndSave()"
+                        :disabled="uploading || !selectedFile"
+                        class="w-full btn-cosmic rounded-xl px-8 py-4 text-xs uppercase tracking-wider disabled:opacity-50"
+                    >
+                        Publish Live
+                    </button>
+
+                    <p class="text-[10px] text-white/30 text-center">
+                        This will sync to global vault
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Filter -->
+        <section
+            class="max-w-6xl mx-auto mb-8 flex flex-wrap items-center justify-between gap-4 fade-in"
+            style="animation-delay:0.2s"
+        >
+
+            <div class="flex items-center gap-4 flex-wrap">
+
+                <div class="flex items-center gap-1.5 text-white/40 text-xs">
+                    <span>$</span>
+                    <span>grep</span>
+                </div>
+
+                <input
+                    type="text"
+                    x-model="searchQuery"
+                    placeholder="Search vouches..."
+                    class="glass rounded-xl px-4 py-2 text-sm text-white placeholder-white/40 focus:border-[var(--primary)] w-full sm:w-56"
+                >
+
+                <select
+                    x-model="sortOrder"
+                    class="glass rounded-xl px-4 py-2 text-sm text-white font-medium focus:outline-none cursor-pointer"
+                >
+                    <option value="latest">Latest First</option>
+                    <option value="oldest">Oldest First</option>
+                </select>
+
+            </div>
+
+            <div
+                class="text-xs text-white/50"
+                x-text="`${filteredItems().length} vouches found`"
+            ></div>
+
+        </section>
+
+        <!-- Masonry -->
+        <section class="masonry">
+
+            <template
+                x-for="(item, index) in filteredItems()"
+                :key="item.id"
+            >
+
+                <div
+                    class="break-inside glass rounded-2xl overflow-hidden mb-6 group relative card-cosmic fade-in"
+                    :style="`animation-delay:${index * 60}ms`"
+                >
+
+                    <template x-if="adminMode">
+
+                        <button
+                            @click="deleteVouch(item.id)"
+                            class="absolute top-3 right-3 z-20 bg-red-500/80 backdrop-blur hover:bg-red-600 text-white p-2 rounded-xl shadow-lg transition-colors"
+                        >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-16v4M4 7h16"/>
+                            </svg>
+                        </button>
+
+                    </template>
+
+                    <div
+                        class="cursor-zoom-in bg-black/60 relative overflow-hidden"
+                        @click="activeImage = item.image"
+                    >
+
+                        <img
+                            :src="item.image"
+                            class="w-full h-auto object-cover max-h-[550px] group-hover:scale-[1.04] transition-transform duration-700"
+                            loading="lazy"
+                            alt="Vouch proof"
+                        >
+
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
+
+                        <div class="absolute inset-0 bg-[var(--primary)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                    </div>
+
+                    <div class="p-4 border-t border-[var(--primary)]/10 flex items-center justify-between">
+
+                        <div class="flex items-center gap-3">
+
+                            <div class="w-8 h-8 rounded-full bg-[var(--primary)]/20 border border-[var(--primary)]/30 flex items-center justify-center font-bold text-xs text-[var(--primary)]">
+                                YV
+                            </div>
+
+                            <div>
+
+                                <h4 class="text-xs font-bold text-white">
+                                    YeloVouch
+                                </h4>
+
+                                <p
+                                    class="text-[10px] text-white/50"
+                                    x-text="formatDate(item.id)"
+                                ></p>
+
+                            </div>
+
+                        </div>
+
+                        <span class="text-xs text-white/40 font-mono">
+                            #<span x-text="index + 1"></span>
+                        </span>
+
+                    </div>
+
+                    <div
+                        x-show="item.caption"
+                        class="px-4 pb-4 text-xs text-white/70 border-t border-[var(--primary)]/5 pt-2"
+                        x-text="item.caption"
+                    ></div>
+
+                </div>
+
+            </template>
+
+        </section>
+
+        <div
+            x-show="items.length === 0"
+            class="text-center py-16 text-white/50 fade-in"
+        >
+
+            <div class="text-6xl mb-4 text-[var(--primary)]/20">
+                🌌
+            </div>
+
+            <p class="text-sm font-medium">
+                No vouches found in vault.
+            </p>
+
+            <p class="text-xs text-white/30 mt-2">
+                $ echo "Be the first to upload"
+            </p>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-[var(--primary)]/10 bg-black/40 backdrop-blur-sm py-6 text-center text-xs font-medium text-white/40 mt-12">
+
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between px-6">
+
+            <span>
+                &copy; 2026 YeloVouch · All rights reserved.
+            </span>
+
+            <span class="flex items-center gap-2 mt-2 sm:mt-0">
+
+                <span class="text-[var(--primary)]/60">
+                    root@yelovouch:~$
+                </span>
+
+                <span class="text-white/30">
+                    ./vault --status
+                </span>
+
+                <span class="text-[var(--primary)] animate-pulse">
+                    ✦
+                </span>
+
+            </span>
+
+        </div>
+
+    </footer>
+
+</div>
+
+<!-- Lightbox -->
+<div
+    x-show="activeImage"
+    x-transition
+    x-cloak
+    class="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 cursor-zoom-out"
+    @click="activeImage = null"
+    @keydown.escape.window="activeImage = null"
+>
+
+    <div class="relative">
+
+        <img
+            :src="activeImage"
+            class="max-w-full max-h-[92vh] rounded-2xl shadow-2xl object-contain border-2 border-[var(--primary)]/50 shadow-[0_0_80px_var(--card-glow)]"
+        >
+
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] text-white/40 bg-black/60 px-3 py-1 rounded-full">
+            click to close
+        </div>
+
     </div>
 
-    <script>
-        function vouchManager() {
-            return {
-                adminMode: false,
-                showPasswordField: false,
-                passwordInput: '',
-                activeImage: null,
-                selectedFile: null,
-                uploading: false,
-                sortOrder: 'latest',
-                searchQuery: '',
-                newCaption: '',
-                items: [],
-                fileSha: '',
-                lastUpdated: null,
-                viewCount: 0,
-                currentTheme: localStorage.getItem('yelo_theme') || 'cosmic',
-                themeTransition: false,
-                imgbbKey: '6e4a5b814deef7f5171b255cae31d459',
-                githubRepo: 'yelovouch-db',
-                githubUser: 'xxade2q',
-                scrambledPass: 'S2lzc215YXNzMTI=',
+</div>
 
-                initApp() {
-                    if (localStorage.getItem('yelo_secure_session_v7') === 'true') this.adminMode = true;
-                    this.loadData();
-                    this.updateViewCount();
-                    this.applyTheme();
-                },
+<!-- APP -->
+<script>
+    function vouchManager() {
+        return {
 
-                applyTheme() {
-                    document.documentElement.className = 'theme-' + this.currentTheme;
-                    localStorage.setItem('yelo_theme', this.currentTheme);
-                },
+            adminMode: false,
+            showPasswordField: false,
+            passwordInput: '',
+            activeImage: null,
+            selectedFile: null,
+            uploading: false,
 
-                saveTheme() {
-                    this.themeTransition = true;
-                    this.applyTheme();
-                    setTimeout(() => {
-                        this.themeTransition = false;
-                    }, 400);
-                },
+            sortOrder: 'latest',
+            searchQuery: '',
+            newCaption: '',
 
-                updateViewCount() {
-                    let views = parseInt(localStorage.getItem('yelo_views') || '0');
-                    views++;
-                    localStorage.setItem('yelo_views', views.toString());
-                    this.viewCount = views;
-                },
+            items: [],
+            fileSha: '',
+            lastUpdated: null,
+            viewCount: 0,
 
-                async loadData() {
-                    try {
-                        const res = await fetch(`https://api.github.com/repos/${this.githubUser}/${this.githubRepo}/contents/db.json`);
-                        if (res.ok) {
-                            const data = await res.json();
-                            this.fileSha = data.sha;
-                            const parsed = JSON.parse(atob(data.content));
-                            this.items = parsed.vouches || [];
-                            this.lastUpdated = Date.now();
-                            localStorage.setItem('yelo_cache', JSON.stringify(this.items));
+            currentTheme: localStorage.getItem('yelo_theme') || 'cosmic',
+            themeTransition: false,
+
+            imgbbKey: '6e4a5b814deef7f5171b255cae31d459',
+
+            githubRepo: 'yelovouch-db',
+            githubUser: 'xxade2q',
+
+            scrambledPass: 'S2lzc215YXNzMTI=',
+
+            /* =========================
+               INITIALIZATION
+            ========================= */
+
+            async initApp() {
+
+                if (
+                    localStorage.getItem('yelo_secure_session_v7') === 'true'
+                ) {
+                    this.adminMode = true;
+                }
+
+                this.applyTheme();
+                this.updateViewCount();
+
+                await this.loadData();
+            },
+
+            /* =========================
+               THEME
+            ========================= */
+
+            applyTheme() {
+
+                document.documentElement.classList.remove(
+                    'theme-cosmic',
+                    'theme-arctic',
+                    'theme-ember'
+                );
+
+                document.documentElement.classList.add(
+                    'theme-' + this.currentTheme
+                );
+
+                localStorage.setItem(
+                    'yelo_theme',
+                    this.currentTheme
+                );
+            },
+
+            saveTheme() {
+
+                this.themeTransition = true;
+
+                this.applyTheme();
+
+                setTimeout(() => {
+                    this.themeTransition = false;
+                }, 400);
+            },
+
+            /* =========================
+               VIEW COUNT
+            ========================= */
+
+            updateViewCount() {
+
+                let views = parseInt(
+                    localStorage.getItem('yelo_views') || '0',
+                    10
+                );
+
+                views++;
+
+                localStorage.setItem(
+                    'yelo_views',
+                    views.toString()
+                );
+
+                this.viewCount = views;
+            },
+
+            /* =========================
+               LOAD GITHUB DATABASE
+            ========================= */
+
+            async loadData() {
+
+                try {
+
+                    const res = await fetch(
+                        `https://api.github.com/repos/${this.githubUser}/${this.githubRepo}/contents/db.json`,
+                        {
+                            headers: {
+                                'Accept': 'application/vnd.github+json'
+                            }
                         }
-                    } catch (err) {
-                        console.warn('GitHub load failed, using cache', err);
-                        this.items = JSON.parse(localStorage.getItem('yelo_cache') || '[]');
+                    );
+
+                    if (!res.ok) {
+                        throw new Error(
+                            `GitHub returned ${res.status}`
+                        );
                     }
-                },
 
-                filteredItems() {
-                    let result = [...this.items];
-                    if (this.searchQuery.trim()) {
-                        const q = this.searchQuery.trim().toLowerCase();
-                        result = result.filter(item => item.id.toString().includes(q) || (item.caption && item.caption.toLowerCase().includes(q)));
-                    }
-                    return result.sort((a, b) => this.sortOrder === 'latest' ? b.id - a.id : a.id - b.id);
-                },
+                    const data = await res.json();
 
-                formatDate(ts) {
-                    if (!ts) return '';
-                    const d = new Date(Number(ts));
-                    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' · ' +
-                           d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-                },
+                    this.fileSha = data.sha;
 
-                submitPassword() {
-                    if (!this.passwordInput) return;
-                    if (btoa(this.passwordInput) === this.scrambledPass) {
-                        localStorage.setItem('yelo_secure_session_v7', 'true');
-                        this.adminMode = true;
-                        this.showPasswordField = false;
-                        this.passwordInput = '';
-                    } else {
-                        alert('Access Denied.');
-                        this.passwordInput = '';
-                    }
-                },
+                    /*
+                     * GitHub returns base64 with possible line breaks.
+                     * Remove them before decoding.
+                     */
+                    const base64 = (
+                        data.content || ''
+                    ).replace(/\s/g, '');
 
-                logoutAdmin() {
-                    this.adminMode = false;
-                    localStorage.removeItem('yelo_secure_session_v7');
-                    this.showPasswordField = false;
-                },
+                    /*
+                     * Decode UTF-8 safely.
+                     */
+                    const binary = atob(base64);
 
-                handleFileSelect(e) {
-                    this.selectedFile = e.target.files[0];
-                },
+                    const bytes = Uint8Array.from(
+                        binary,
+                        char => char.charCodeAt(0)
+                    );
 
-                async uploadAndSave() {
-                    if (!this.selectedFile || !this.adminMode) return;
-                    this.uploading = true;
+                    const decoded = new TextDecoder(
+                        'utf-8'
+                    ).decode(bytes);
+
+                    const parsed = JSON.parse(decoded);
+
+                    this.items = Array.isArray(parsed.vouches)
+                        ? parsed.vouches
+                        : [];
+
+                    this.lastUpdated = Date.now();
+
+                    localStorage.setItem(
+                        'yelo_cache',
+                        JSON.stringify(this.items)
+                    );
+
+                    console.log(
+                        'GitHub database loaded successfully.',
+                        this.items.length,
+                        'vouches'
+                    );
+
+                } catch (err) {
+
+                    console.error(
+                        'GitHub load failed:',
+                        err
+                    );
+
                     try {
-                        const formData = new FormData();
-                        formData.append('image', this.selectedFile);
-                        const resp = await fetch(`https://api.imgbb.com/1/upload?key=${this.imgbbKey}`, {
+
+                        this.items = JSON.parse(
+                            localStorage.getItem('yelo_cache') || '[]'
+                        );
+
+                        if (!Array.isArray(this.items)) {
+                            this.items = [];
+                        }
+
+                    } catch {
+
+                        this.items = [];
+                    }
+
+                }
+            },
+
+            /* =========================
+               FILTER
+            ========================= */
+
+            filteredItems() {
+
+                let result = [...this.items];
+
+                if (this.searchQuery.trim()) {
+
+                    const q =
+                        this.searchQuery
+                            .trim()
+                            .toLowerCase();
+
+                    result = result.filter(item => {
+
+                        return (
+                            String(item.id)
+                                .includes(q) ||
+
+                            (
+                                item.caption &&
+                                String(item.caption)
+                                    .toLowerCase()
+                                    .includes(q)
+                            )
+                        );
+
+                    });
+                }
+
+                return result.sort(
+                    (a, b) => {
+
+                        return this.sortOrder === 'latest'
+                            ? Number(b.id) - Number(a.id)
+                            : Number(a.id) - Number(b.id);
+
+                    }
+                );
+            },
+
+            /* =========================
+               DATE
+            ========================= */
+
+            formatDate(ts) {
+
+                if (!ts) return '';
+
+                const d = new Date(Number(ts));
+
+                return (
+                    d.toLocaleDateString(
+                        'en-US',
+                        {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                        }
+                    )
+                    +
+                    ' · '
+                    +
+                    d.toLocaleTimeString(
+                        'en-US',
+                        {
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        }
+                    )
+                );
+            },
+
+            /* =========================
+               ADMIN PASSWORD
+            ========================= */
+
+            submitPassword() {
+
+                if (!this.passwordInput) return;
+
+                if (
+                    btoa(this.passwordInput) ===
+                    this.scrambledPass
+                ) {
+
+                    localStorage.setItem(
+                        'yelo_secure_session_v7',
+                        'true'
+                    );
+
+                    this.adminMode = true;
+                    this.showPasswordField = false;
+                    this.passwordInput = '';
+
+                } else {
+
+                    alert('Access Denied.');
+
+                    this.passwordInput = '';
+                }
+            },
+
+            logoutAdmin() {
+
+                this.adminMode = false;
+
+                localStorage.removeItem(
+                    'yelo_secure_session_v7'
+                );
+
+                this.showPasswordField = false;
+            },
+
+            /* =========================
+               FILE SELECT
+            ========================= */
+
+            handleFileSelect(e) {
+
+                if (
+                    e.target.files &&
+                    e.target.files.length > 0
+                ) {
+
+                    this.selectedFile =
+                        e.target.files[0];
+
+                } else {
+
+                    this.selectedFile = null;
+                }
+            },
+
+            /* =========================
+               UPLOAD + SAVE
+            ========================= */
+
+            async uploadAndSave() {
+
+                if (
+                    !this.selectedFile ||
+                    !this.adminMode ||
+                    this.uploading
+                ) {
+                    return;
+                }
+
+                this.uploading = true;
+
+                let newItem = null;
+
+                try {
+
+                    /*
+                     * STEP 1
+                     * Upload image to ImgBB.
+                     */
+
+                    const formData = new FormData();
+
+                    formData.append(
+                        'image',
+                        this.selectedFile
+                    );
+
+                    const resp = await fetch(
+                        `https://api.imgbb.com/1/upload?key=${this.imgbbKey}`,
+                        {
                             method: 'POST',
                             body: formData
-                        });
-                        const data = await resp.json();
-                        if (data.success) {
-                            this.items.unshift({
-                                id: Date.now(),
-                                image: data.data.url,
-                                caption: this.newCaption || ''
-                            });
-                            this.newCaption = '';
-                            await this.syncToGitHub();
-                            this.selectedFile = null;
-                            this.lastUpdated = Date.now();
-                            alert('Vouch published to vault!');
-                        } else {
-                            alert('ImgBB upload failed.');
                         }
-                    } catch (e) {
-                        alert('Network error.');
-                    } finally {
-                        this.uploading = false;
+                    );
+
+                    if (!resp.ok) {
+
+                        throw new Error(
+                            `ImgBB returned ${resp.status}`
+                        );
                     }
-                },
 
-                async deleteVouch(id) {
-                    if (!confirm('Delete this vouch permanently?')) return;
-                    this.items = this.items.filter(item => item.id !== id);
-                    await this.syncToGitHub();
-                },
+                    const data = await resp.json();
 
-                async syncToGitHub() {
-                    try {
-                        const content = btoa(JSON.stringify({ vouches: this.items }, null, 2));
-                        const res = await fetch('https://api.github.com/repos/' + this.githubUser + '/' + this.githubRepo + '/contents/db.json', {
-                            method: 'PUT',
-                            headers: { 'Content-Type': 'application/json' },
+                    if (
+                        !data.success ||
+                        !data.data ||
+                        !data.data.url
+                    ) {
+
+                        throw new Error(
+                            'ImgBB upload failed.'
+                        );
+                    }
+
+                    /*
+                     * STEP 2
+                     * Add item locally.
+                     */
+
+                    newItem = {
+                        id: Date.now(),
+                        image: data.data.url,
+                        caption: this.newCaption || ''
+                    };
+
+                    this.items.unshift(newItem);
+
+                    /*
+                     * STEP 3
+                     * Save to GitHub through Vercel.
+                     */
+
+                    const synced =
+                        await this.syncToGitHub();
+
+                    if (!synced) {
+
+                        /*
+                         * Roll back local item
+                         * if GitHub failed.
+                         */
+
+                        this.items =
+                            this.items.filter(
+                                item =>
+                                    item.id !== newItem.id
+                            );
+
+                        throw new Error(
+                            'GitHub synchronization failed.'
+                        );
+                    }
+
+                    this.newCaption = '';
+                    this.selectedFile = null;
+                    this.lastUpdated = Date.now();
+
+                    alert(
+                        'Vouch published to vault!'
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        'Upload error:',
+                        error
+                    );
+
+                    alert(
+                        'Upload failed: ' +
+                        error.message
+                    );
+
+                } finally {
+
+                    this.uploading = false;
+                }
+            },
+
+            /* =========================
+               DELETE
+            ========================= */
+
+            async deleteVouch(id) {
+
+                if (
+                    !confirm(
+                        'Delete this vouch permanently?'
+                    )
+                ) {
+                    return;
+                }
+
+                const oldItems = [...this.items];
+
+                this.items =
+                    this.items.filter(
+                        item => item.id !== id
+                    );
+
+                try {
+
+                    const synced =
+                        await this.syncToGitHub();
+
+                    if (!synced) {
+
+                        /*
+                         * Restore deleted item
+                         * if GitHub save failed.
+                         */
+
+                        this.items = oldItems;
+
+                        alert(
+                            'Delete failed. The vouch was restored.'
+                        );
+
+                        return;
+                    }
+
+                    alert(
+                        'Vouch deleted successfully.'
+                    );
+
+                } catch (error) {
+
+                    this.items = oldItems;
+
+                    console.error(
+                        'Delete error:',
+                        error
+                    );
+
+                    alert(
+                        'Delete failed: ' +
+                        error.message
+                    );
+                }
+            },
+
+            /* =========================
+               GITHUB SYNC
+               IMPORTANT:
+               DO NOT PUT GITHUB TOKEN HERE.
+               ========================= */
+
+            async syncToGitHub() {
+
+                try {
+
+                    /*
+                     * Convert database to JSON.
+                     */
+
+                    const json = JSON.stringify(
+                        {
+                            vouches: this.items
+                        },
+                        null,
+                        2
+                    );
+
+                    /*
+                     * UTF-8 safe Base64.
+                     */
+
+                    const content = btoa(
+                        unescape(
+                            encodeURIComponent(json)
+                        )
+                    );
+
+                    console.log(
+                        'Sending database to Vercel API...'
+                    );
+
+                    /*
+                     * IMPORTANT:
+                     *
+                     * The browser must NOT call:
+                     *
+                     * https://api.github.com/.../contents/db.json
+                     *
+                     * directly for PUT.
+                     *
+                     * It now calls:
+                     *
+                     * /api/sync
+                     *
+                     * Your Vercel function handles
+                     * the private GitHub token.
+                     */
+
+                    const res = await fetch(
+                        '/api/sync',
+                        {
+                            method: 'POST',
+
+                            headers: {
+                                'Content-Type':
+                                    'application/json'
+                            },
+
                             body: JSON.stringify({
-                                message: 'Update vouches',
+                                user: this.githubUser,
+                                repo: this.githubRepo,
                                 content: content,
                                 sha: this.fileSha
                             })
-                        });
-                        if (res.ok) {
-                            const data = await res.json();
-                            this.fileSha = data.content.sha;
-                            localStorage.setItem('yelo_cache', JSON.stringify(this.items));
-                            alert('Vault synchronized.');
-                        } else {
-                            alert('GitHub sync failed.');
                         }
-                    } catch (e) {
-                        alert('Sync error.');
-                    }
-                },
+                    );
 
-                // Discord modal
-                openDiscordModal() {
-                    document.getElementById('discordModal').classList.add('active');
-                },
-                closeDiscordModal() {
-                    document.getElementById('discordModal').classList.remove('active');
+                    let data;
+
+                    try {
+                        data = await res.json();
+                    } catch {
+                        data = {};
+                    }
+
+                    console.log(
+                        'Vercel API response:',
+                        data
+                    );
+
+                    if (!res.ok) {
+
+                        throw new Error(
+                            data.error ||
+                            `API returned ${res.status}`
+                        );
+                    }
+
+                    if (data.sha) {
+
+                        this.fileSha =
+                            data.sha;
+                    }
+
+                    /*
+                     * Update local cache ONLY
+                     * after successful GitHub sync.
+                     */
+
+                    localStorage.setItem(
+                        'yelo_cache',
+                        JSON.stringify(this.items)
+                    );
+
+                    this.lastUpdated =
+                        Date.now();
+
+                    console.log(
+                        'Vault synchronized successfully.'
+                    );
+
+                    return true;
+
+                } catch (error) {
+
+                    console.error(
+                        'GitHub sync error:',
+                        error
+                    );
+
+                    alert(
+                        'GitHub sync failed: ' +
+                        error.message
+                    );
+
+                    return false;
                 }
-            };
-        }
-    </script>
+            },
+
+            /* =========================
+               DISCORD MODAL
+               ========================= */
+
+            openDiscordModal() {
+
+                const modal =
+                    document.getElementById(
+                        'discordModal'
+                    );
+
+                if (modal) {
+                    modal.classList.add(
+                        'active'
+                    );
+                }
+            },
+
+            closeDiscordModal() {
+
+                const modal =
+                    document.getElementById(
+                        'discordModal'
+                    );
+
+                if (modal) {
+                    modal.classList.remove(
+                        'active'
+                    );
+                }
+            }
+        };
+    }
+</script>
+```
+
 </body>
 </html>
