@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-    // CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -15,13 +14,13 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { user, repo, content, sha } = req.body;
+        const { user, repo, content, sha } = req.body || {};
 
         const token = process.env.GITHUB_TOKEN;
 
         if (!token) {
             return res.status(500).json({
-                error: 'GITHUB_TOKEN is not configured in Vercel'
+                error: 'GITHUB_TOKEN is missing in Vercel Environment Variables'
             });
         }
 
@@ -31,13 +30,17 @@ export default async function handler(req, res) {
             });
         }
 
-        const url = `https://api.github.com/repos/${user}/${repo}/contents/db.json`;
+        const githubUrl =
+            `https://api.github.com/repos/${user}/${repo}/contents/db.json`;
 
-        let currentSha = sha;
+        let currentSha = sha || null;
 
-        // If frontend doesn't have SHA, get the current SHA from GitHub
+        /*
+         * Get the current SHA if the frontend doesn't have one.
+         */
         if (!currentSha) {
-            const check = await fetch(url, {
+            const existingResponse = await fetch(githubUrl, {
+                method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Accept': 'application/vnd.github+json',
@@ -45,22 +48,28 @@ export default async function handler(req, res) {
                 }
             });
 
-            if (check.ok) {
-                const existing = await check.json();
-                currentSha = existing.sha;
+            if (existingResponse.ok) {
+                const existingData = await existingResponse.json();
+                currentSha = existingData.sha;
+            } else if (existingResponse.status !== 404) {
+                const errorData = await existingResponse.json().catch(() => ({}));
+
+                return res.status(existingResponse.status).json({
+                    error: errorData.message || 'Unable to read db.json from GitHub'
+                });
             }
         }
 
-        const body = {
+        const githubBody = {
             message: 'Update vouches database',
             content: content
         };
 
         if (currentSha) {
-            body.sha = currentSha;
+            githubBody.sha = currentSha;
         }
 
-        const githubResponse = await fetch(url, {
+        const githubResponse = await fetch(githubUrl, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -68,30 +77,31 @@ export default async function handler(req, res) {
                 'Content-Type': 'application/json',
                 'X-GitHub-Api-Version': '2022-11-28'
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify(githubBody)
         });
 
-        const data = await githubResponse.json();
+        const githubData = await githubResponse.json().catch(() => ({}));
 
         if (!githubResponse.ok) {
-            console.error('GitHub error:', data);
+            console.error('GitHub API error:', githubData);
 
             return res.status(githubResponse.status).json({
-                error: data.message || 'GitHub API error',
-                githubStatus: githubResponse.status
+                error: githubData.message || 'GitHub API request failed',
+                status: githubResponse.status
             });
         }
 
         return res.status(200).json({
             success: true,
-            sha: data.content?.sha
+            message: 'Database synced successfully',
+            sha: githubData.content?.sha || null
         });
 
     } catch (error) {
         console.error('Server error:', error);
 
         return res.status(500).json({
-            error: error.message
+            error: error.message || 'Internal server error'
         });
     }
 }
